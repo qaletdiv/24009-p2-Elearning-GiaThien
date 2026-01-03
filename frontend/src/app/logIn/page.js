@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -28,12 +29,20 @@ export default function Login() {
       });
 
       const data = await res.json();
+      console.log(data);
 
       if (res.ok) {
-        setMessage("Đăng nhập thành công!");
+        // setMessage("Đăng nhập thành công!");
+        // localStorage.setItem("token", data.token);
+        // console.log("User info:", data.user);
+        // router.push("/dashboard");
+        console.log("token trước khi lưu:", data.token);
+
         localStorage.setItem("token", data.token);
-        console.log("User info:", data.user);
-        router.push("/dashboard");
+
+        console.log("token sau khi lưu:", localStorage.getItem("token"));
+
+        router.replace("/dashboard");
       } else {
         setMessage(data.message || "Sai email hoặc mật khẩu");
       }
@@ -72,7 +81,7 @@ export default function Login() {
               className="w-full border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
+          <p>Chưa có tài khoản? <Link className="text-blue-500 hover:text-blue-700 hover:underline cursor-pointer" href='/signIn'>Đăng ký ngay</Link></p>
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"

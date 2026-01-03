@@ -46,7 +46,7 @@ export default function AllCourses() {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar bộ lọc */}
+     
       <aside className="w-64 bg-white p-6 border-r shadow-sm">
         <h2 className="font-bold text-lg mb-4">Lọc theo Category</h2>
         <ul className="space-y-2">
@@ -76,11 +76,10 @@ export default function AllCourses() {
         )}
       </aside>
 
-      {/* Danh sách khóa học */}
       <main className="flex-1 p-6">
         <h1 className="text-2xl font-bold mb-6">Tất cả khóa học</h1>
 
-        {/* Thanh tìm kiếm */}
+        
         <div className="mb-6 flex">
           <input
             type="text"
