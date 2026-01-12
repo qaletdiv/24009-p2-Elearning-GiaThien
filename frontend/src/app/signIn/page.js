@@ -34,7 +34,7 @@ export default function SignIn() {
       const data = await res.json();
       if (res.ok) {
         setMessage("Đăng ký thành công!");
-        router.push("/logIn");
+        router.push("/login");
 
       } else {
         setMessage(data.message || "Có lỗi xảy ra");

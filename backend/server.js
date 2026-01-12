@@ -2,7 +2,8 @@ const express = require('express')
 const cors = require('cors');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
+const path = require("path");
+const multer = require("multer");
 // Import data functions
 const {
   getUsers,
@@ -24,10 +25,13 @@ const SECRET_KEY = 'abcd'
 // middleware
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
+app.use(express.static('public'));
 
-/** =========================
- *  AUTH
- *  ========================= */
+app.use("/files", express.static(path.join(__dirname, "public/files")));
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+
+
+
 
 // API đăng kí
 app.post('/api/auth/signup', async (req, res) => {
@@ -92,9 +96,7 @@ app.post('/api/auth/login', async (req, res) => {
   });
 });
 
-/** =========================
- *  AUTH MIDDLEWARE
- *  ========================= */
+
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -108,9 +110,30 @@ function authenticateToken(req, res, next) {
   });
 }
 
-/** =========================
- *  USERS
- *  ========================= */
+// AVATAR
+const avatarStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "public/uploads/avatars"));
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname || "").toLowerCase();
+    const safeExt = [".png", ".jpg", ".jpeg", ".webp"].includes(ext) ? ext : ".png";
+    cb(null, `u${req.user.id}_${Date.now()}${safeExt}`);
+  },
+});
+
+const uploadAvatar = multer({
+  storage: avatarStorage,
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
+  fileFilter: (req, file, cb) => {
+    const ok = ["image/png", "image/jpeg", "image/webp"].includes(file.mimetype);
+    if (!ok) return cb(new Error("Chỉ cho phép PNG/JPG/WEBP"));
+    cb(null, true);
+  },
+});
+
+
+
 
 // API lấy danh sách người dùng (chỉ cho user đăng nhập)
 app.get('/api/users', authenticateToken, (req, res) => {
@@ -130,32 +153,44 @@ app.get("/api/users/me", authenticateToken, (req, res) => {
 // API cập nhật user
 app.put("/api/users/me", authenticateToken, async (req, res) => {
   try {
-    const userId = parseInt(req.user.id);
-    const { name, email, currentPassword, newPassword } = req.body;
+    const userId = Number(req.user.id);
 
-    const user = getUsers().find(u => u.id === userId);
+    const {
+      name,
+      email,
+      avatar,
+      currentPassword,
+      newPassword,
+      confirmNewPassword,
+    } = req.body;
+
+    const user = getUsers().find((u) => u.id === userId);
     if (!user) return res.status(404).json({ message: "Không tìm thấy user" });
 
-    // nếu muốn đổi email, kiểm tra trùng
+    // nếu muốn đổi email  check trùng
     if (email && email !== user.email) {
-      const exists = getUsers().some(u => u.email === email && u.id !== userId);
+      const exists = getUsers().some((u) => u.email === email && u.id !== userId);
       if (exists) return res.status(409).json({ message: "Email đã được sử dụng" });
     }
 
     const updates = {};
 
-    if (name) updates.name = name;
-    if (email) updates.email = email;
+    if (typeof name === "string" && name.trim()) updates.name = name.trim();
+    if (typeof email === "string" && email.trim()) updates.email = email.trim();
+    if (typeof avatar === "string" && avatar.trim()) updates.avatar = avatar.trim();
 
-    // đổi password nếu có newPassword
+    // đổi password 
     if (newPassword) {
       if (!currentPassword) {
         return res.status(400).json({ message: "Vui lòng nhập mật khẩu hiện tại" });
       }
+      if (confirmNewPassword !== undefined && newPassword !== confirmNewPassword) {
+        return res.status(400).json({ message: "Mật khẩu mới không khớp" });
+      }
 
       const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {
-        return res.status(401).json({ message: "Mật khẩu hiện tại không đúng" });
+        return res.status(400).json({ message: "Mật khẩu hiện tại không đúng" });
       }
 
       updates.password = await bcrypt.hash(newPassword, 10);
@@ -164,9 +199,25 @@ app.put("/api/users/me", authenticateToken, async (req, res) => {
     const updated = updateUser(userId, updates);
     if (!updated) return res.status(500).json({ message: "Cập nhật thất bại" });
 
+    // Nếu email đổi -> trả token mới để FE lưu lại
+    let token = null;
+    if (updates.email && updates.email !== req.user.email) {
+      token = jwt.sign(
+        { id: updated.id, email: updated.email },
+        SECRET_KEY,
+        { expiresIn: "5h" }
+      );
+    }
+
     return res.json({
       message: "Cập nhật hồ sơ thành công",
-      user: { id: updated.id, name: updated.name, email: updated.email }
+      user: {
+        id: updated.id,
+        name: updated.name,
+        email: updated.email,
+        avatar: updated.avatar || "",
+      },
+      ...(token ? { token } : {}),
     });
   } catch (err) {
     console.error(err);
@@ -174,10 +225,28 @@ app.put("/api/users/me", authenticateToken, async (req, res) => {
   }
 });
 
+app.post("/api/users/me/avatar", authenticateToken, uploadAvatar.single("avatar"), (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ message: "Không có file avatar" });
 
-/** =========================
- *  COURSES - STATIC / LIST
- *  ========================= */
+    const userId = Number(req.user.id);
+
+    const avatarUrl = `http://localhost:${PORT}/uploads/avatars/${req.file.filename}`;
+
+    const updated = updateUser(userId, { avatar: avatarUrl });
+    if (!updated) return res.status(500).json({ message: "Cập nhật avatar thất bại" });
+
+    return res.json({
+      message: "Cập nhật avatar thành công",
+      avatar: avatarUrl,
+      user: { id: updated.id, name: updated.name, email: updated.email, avatar: avatarUrl },
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Lỗi server" });
+  }
+});
+
 
 // API lọc trong trang courses
 app.get("/api/categories", (req, res) => {
@@ -187,7 +256,7 @@ app.get("/api/categories", (req, res) => {
 
 // API lấy tất cả khóa học (public)
 app.get("/api/courses", (req, res) => {
-  const { keyword, category, level } = req.query;
+  const { keyword, category, level, description, target } = req.query;
 
   let result = [...getCourses()];
 
@@ -205,23 +274,29 @@ app.get("/api/courses", (req, res) => {
     result = result.filter(c => c.level === level);
   }
 
+  if (description) {
+    result = result.filter(c => c.description === description);
+  }
+  if (target) {
+    result = result.filter(c => c.target === target);
+  }
   const formatted = result.map(c => ({
     id: c.id,
     title: c.title,
     image: `http://localhost:${PORT}${c.image}`,
+    description: c.description || "",
+    target: c.target || "",
     category: c.category || "Chưa phân loại",
-    level: c.level || "Cơ bản"
+    level: c.level || "Cơ bản",
+    price: c.price ?? "Miễn phí",
   }));
 
   res.json(formatted);
 });
 
-/** =========================
- *  COURSES - IMPORTANT ORDER
- *  Put specific routes BEFORE /:id
- *  ========================= */
 
-// ✅ API lấy danh sách khóa học của user  (PHẢI đặt trước /api/courses/:id)
+
+//  API lấy danh sách khóa học của user  (PHẢI đặt trước /api/courses/:id)
 app.get("/api/courses/my", authenticateToken, (req, res) => {
   const userId = parseInt(req.user.id);
 
@@ -244,7 +319,7 @@ app.get("/api/courses/my", authenticateToken, (req, res) => {
   res.json(myCourses);
 });
 
-// ✅ API lấy bài học gần nhất chưa hoàn thành (đặt trước /:id để tránh bị nuốt nếu bạn đổi path)
+// API lấy bài học gần nhất chưa hoàn thành (đặt trước /:id để tránh bị nuốt nếu bạn đổi path)
 app.get("/api/courses/:id/lesson/last", authenticateToken, (req, res) => {
   const courseId = req.params.id;
   const course = getCourses().find((c) => c.id === courseId);

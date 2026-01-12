@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-
+import Headers from "@/components/header";
 export default function ChapterQuizPage() {
   const { id, quizId } = useParams();
   const router = useRouter();
@@ -77,7 +77,9 @@ export default function ChapterQuizPage() {
   // 📘 Nếu đã nộp bài => hiển thị kết quả
   if (result)
     return (
+
       <div className="p-6 max-w-3xl mx-auto">
+        <Headers></Headers>
         <h1 className="text-2xl font-bold mb-4">{quiz.title}</h1>
         <p className="mb-4 text-lg font-semibold text-green-700">
           Điểm của bạn: {result.score} ({result.correctCount}/{result.total} đúng)

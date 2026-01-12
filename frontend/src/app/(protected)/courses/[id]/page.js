@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-
+import Headers from "@/components/header";
 export default function CourseDetail() {
   const { id } = useParams();
   const router = useRouter();
@@ -15,14 +15,12 @@ export default function CourseDetail() {
 
   const stars = useMemo(() => [1, 2, 3, 4, 5], []);
 
-  // ===== Fetch course detail (public) =====
   useEffect(() => {
     if (!id) return;
 
     fetch(`http://localhost:8080/api/courses/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        // Tính tiến độ học (nếu có lessons)
         if (data?.lessons?.length) {
           const completed = data.lessons.filter((l) => l.completed).length;
           data.progress = Math.round((completed / data.lessons.length) * 100);
@@ -38,7 +36,6 @@ export default function CourseDetail() {
       });
   }, [id]);
 
-  // ===== Check enrollment (need token) =====
   useEffect(() => {
     if (!id) return;
 
@@ -54,7 +51,6 @@ export default function CourseDetail() {
       })
       .catch((error) => {
         console.error("Error checking enrollment:", error);
-        // Fallback: check in my courses
         fetch(`http://localhost:8080/api/courses/my`, {
           headers: { Authorization: `Bearer ${token}` },
         })
@@ -67,55 +63,51 @@ export default function CourseDetail() {
       });
   }, [id]);
 
-  // ===== Action button =====
+  
   const handleAction = async () => {
-    if (!course) return;
+  if (!course) return;
 
-    if (isEnrolled) {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        router.push("/login");
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    router.push("/login");
+    return;
+  }
+
+  if (isEnrolled) {
+    try {
+      const res = await fetch(
+        `http://localhost:8080/api/courses/${id}/lesson/last`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const data = await res.json();
+
+      if (res.ok && data.lessonId) {
+        router.push(`/courses/${id}/lessons/${data.lessonId}`);
         return;
       }
 
-      try {
-        const res = await fetch(`http://localhost:8080/api/courses/${id}/lesson/last`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json().catch(() => ({}));
-
-        if (res.ok && data.lessonId) {
-          router.push(`/courses/${id}/lessons/${data.lessonId}`);
-          return;
-        }
-
-        // Nếu đã hoàn thành tất cả, đi đến bài học đầu tiên
-        const firstLesson = course.lessons?.[0];
-        if (firstLesson) {
-          router.push(`/courses/${id}/lessons/${firstLesson.id}`);
-        } else {
-          alert("Khóa học chưa có bài học nào!");
-        }
-      } catch (error) {
-        console.error("Error getting last lesson:", error);
-        const firstLesson = course.lessons?.[0];
-        if (firstLesson) router.push(`/courses/${id}/lessons/${firstLesson.id}`);
+      const firstLesson = course.lessons?.[0];
+      if (firstLesson) {
+        router.push(`/courses/${id}/lessons/${firstLesson.id}`);
       }
-
-      return;
+    } catch (err) {
+      console.error(err);
     }
+    return;
+  }
 
-    // Nếu chưa enroll:
-    if (course.price && course.price !== "Miễn phí") {
-      router.push(`/checkout?courseId=${id}`);
-      return;
-    }
 
-    // Miễn phí -> đăng ký luôn
-    handleRegister();
-  };
+  if (course.price === "Miễn phí" || course.price === 0) {
+    handleRegister(); // đăng ký luôn, KHÔNG checkout
+    return;
+  }
 
-  // ===== Register course =====
+  router.push(`/checkout?courseId=${id}`);
+};
+
+
+  
   const handleRegister = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -147,7 +139,7 @@ export default function CourseDetail() {
     }
   };
 
-  // ===== Submit review =====
+ 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
 
@@ -180,7 +172,7 @@ export default function CourseDetail() {
       const data = await res.json().catch(() => ({}));
 
       if (res.ok) {
-        // ✅ backend trả { message, review }
+        //  backend trả { message, review }
         if (data?.review) {
           setReviews((prev) => [...prev, data.review]);
         }
@@ -194,7 +186,7 @@ export default function CourseDetail() {
     }
   };
 
-  // ===== Helpers =====
+
   const renderStars = (rating) => {
     const r = Math.max(1, Math.min(5, Number(rating) || 0));
     return (
@@ -210,6 +202,15 @@ export default function CourseDetail() {
     if (isNaN(dt.getTime())) return "";
     return dt.toLocaleString();
   };
+  const avgRating = useMemo(() => {
+    if (!Array.isArray(reviews) || reviews.length === 0) return 0;
+
+    const sum = reviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0);
+    const avg = sum / reviews.length;
+
+
+    return Math.round(avg * 10) / 10;
+  }, [reviews]);
 
   if (!course) return <p className="p-6">Đang tải...</p>;
 
@@ -217,6 +218,7 @@ export default function CourseDetail() {
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
+      <Headers></Headers>
       <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
 
       <img
@@ -231,7 +233,17 @@ export default function CourseDetail() {
         <p className="font-semibold">Giá: {course.price}</p>
         <p>Giảng viên: {course.instructor}</p>
         <p>Thời lượng: {course.duration}</p>
-        <p>Đánh giá trung bình: ⭐ {`${course.rating}/5`}</p>
+        <p>
+          Đánh giá trung bình:{" "}
+          <span className="font-semibold">
+            {avgRating > 0 ? `${avgRating}/5` : "Chưa có đánh giá"}
+          </span>
+          {avgRating > 0 && (
+            <span className="ml-2 text-lg">{renderStars(avgRating)}</span>
+          )}
+          <span className="ml-2 text-sm text-gray-500">({reviews.length} đánh giá)</span>
+        </p>
+
         <p className="font-semibold text-blue-600">Tiến độ: {course.progress}%</p>
       </div>
 
@@ -258,10 +270,10 @@ export default function CourseDetail() {
               <li key={l.id} className="space-y-2">
                 <div
                   className={`cursor-pointer hover:underline ${l.completed
-                      ? "text-green-600"
-                      : isDisabled
-                        ? "text-gray-400 cursor-not-allowed"
-                        : ""
+                    ? "text-green-600"
+                    : isDisabled
+                      ? "text-gray-400 cursor-not-allowed"
+                      : ""
                     }`}
                   onClick={() => {
                     if (!isEnrolled) {
@@ -281,11 +293,11 @@ export default function CourseDetail() {
             );
           })}
 
-        {/* Quiz cuối khóa */}
+       
         {canTakeQuiz && (
           <li className="mt-4 pt-4 border-t">
             <div className="flex items-center gap-2">
-              <span className="text-lg font-semibold text-purple-600">🎯 Quiz cuối khóa</span>
+              <span className="text-lg font-semibold text-purple-600"> Quiz cuối khóa</span>
               <button
                 onClick={() => router.push(`/courses/${id}/quiz`)}
                 className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 font-semibold"
@@ -300,7 +312,7 @@ export default function CourseDetail() {
         )}
       </ul>
 
-      {/* ===== Đánh giá ===== */}
+    
       <h2 className="text-xl font-bold mt-6 mb-2">Đánh giá khóa học</h2>
 
       <div className="space-y-4">
@@ -328,7 +340,6 @@ export default function CourseDetail() {
         )}
       </div>
 
-      {/* ===== Form viết đánh giá ===== */}
       {isEnrolled && (
         <form onSubmit={handleReviewSubmit} className="mt-6 border-t pt-4 space-y-3">
           <h3 className="font-bold">Viết đánh giá của bạn</h3>

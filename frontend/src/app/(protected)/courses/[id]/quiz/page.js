@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-
+import Headers from "@/components/header";
 export default function CourseQuizPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -70,6 +70,7 @@ export default function CourseQuizPage() {
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
+      <Headers></Headers>
       <h1 className="text-2xl font-bold mb-6">{quiz.title}</h1>
       {quiz.questions.map(q => (
         <div key={q.id} className="mb-6">

@@ -32,7 +32,7 @@ export default function Login() {
       console.log(data);
 
       if (res.ok) {
-        // setMessage("Đăng nhập thành công!");
+        setMessage("Đăng nhập thành công!");
         // localStorage.setItem("token", data.token);
         // console.log("User info:", data.user);
         // router.push("/dashboard");
@@ -56,7 +56,7 @@ export default function Login() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
-
+        <h2 className="text-2xl font-bold text-center mb-6">{message}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700 mb-1">Email</label>
