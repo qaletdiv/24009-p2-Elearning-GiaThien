@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 import Headers from "@/components/header";
 export default function CourseDetail() {
   const { id } = useParams();
@@ -63,51 +64,51 @@ export default function CourseDetail() {
       });
   }, [id]);
 
-  
+
   const handleAction = async () => {
-  if (!course) return;
+    if (!course) return;
 
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  if (!token) {
-    router.push("/login");
-    return;
-  }
-
-  if (isEnrolled) {
-    try {
-      const res = await fetch(
-        `http://localhost:8080/api/courses/${id}/lesson/last`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      const data = await res.json();
-
-      if (res.ok && data.lessonId) {
-        router.push(`/courses/${id}/lessons/${data.lessonId}`);
-        return;
-      }
-
-      const firstLesson = course.lessons?.[0];
-      if (firstLesson) {
-        router.push(`/courses/${id}/lessons/${firstLesson.id}`);
-      }
-    } catch (err) {
-      console.error(err);
+    if (!token) {
+      router.push("/login");
+      return;
     }
-    return;
-  }
+
+    if (isEnrolled) {
+      try {
+        const res = await fetch(
+          `http://localhost:8080/api/courses/${id}/lesson/last`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const data = await res.json();
+
+        if (res.ok && data.lessonId) {
+          router.push(`/courses/${id}/lessons/${data.lessonId}`);
+          return;
+        }
+
+        const firstLesson = course.lessons?.[0];
+        if (firstLesson) {
+          router.push(`/courses/${id}/lessons/${firstLesson.id}`);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+    }
 
 
-  if (course.price === "Miễn phí" || course.price === 0) {
-    handleRegister(); // đăng ký luôn, KHÔNG checkout
-    return;
-  }
+    if (course.price === "Miễn phí" || course.price === 0) {
+      handleRegister(); // đăng ký luôn, KHÔNG checkout
+      return;
+    }
 
-  router.push(`/checkout?courseId=${id}`);
-};
+    router.push(`/checkout?courseId=${id}`);
+  };
 
 
-  
+
   const handleRegister = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -139,7 +140,7 @@ export default function CourseDetail() {
     }
   };
 
- 
+
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
 
@@ -221,9 +222,11 @@ export default function CourseDetail() {
       <Headers></Headers>
       <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
 
-      <img
+      <Image
         src={course.image}
         alt={course.title}
+        width={400}
+        height={200}
         className="w-full h-64 object-cover rounded mb-4"
       />
 
@@ -293,7 +296,7 @@ export default function CourseDetail() {
             );
           })}
 
-       
+
         {canTakeQuiz && (
           <li className="mt-4 pt-4 border-t">
             <div className="flex items-center gap-2">
@@ -312,7 +315,7 @@ export default function CourseDetail() {
         )}
       </ul>
 
-    
+
       <h2 className="text-xl font-bold mt-6 mb-2">Đánh giá khóa học</h2>
 
       <div className="space-y-4">

@@ -143,13 +143,19 @@ app.get('/api/users', authenticateToken, (req, res) => {
 
 // API lấy thông tin user hiện tại
 app.get("/api/users/me", authenticateToken, (req, res) => {
-  const userId = parseInt(req.user.id);
+  const userId = Number(req.user.id);
   const user = getUsers().find((u) => u.id === userId);
 
   if (!user) return res.status(404).json({ message: "Không tìm thấy user" });
 
-  res.json({ id: user.id, name: user.name, email: user.email });
+  return res.json({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    avatar: user.avatar || "",
+  });
 });
+
 // API cập nhật user
 app.put("/api/users/me", authenticateToken, async (req, res) => {
   try {
@@ -177,7 +183,7 @@ app.put("/api/users/me", authenticateToken, async (req, res) => {
 
     if (typeof name === "string" && name.trim()) updates.name = name.trim();
     if (typeof email === "string" && email.trim()) updates.email = email.trim();
-    if (typeof avatar === "string" && avatar.trim()) updates.avatar = avatar.trim();
+    
 
     // đổi password 
     if (newPassword) {
@@ -231,7 +237,8 @@ app.post("/api/users/me/avatar", authenticateToken, uploadAvatar.single("avatar"
 
     const userId = Number(req.user.id);
 
-    const avatarUrl = `http://localhost:${PORT}/uploads/avatars/${req.file.filename}`;
+    const avatarUrl = `${req.protocol}://${req.get("host")}/uploads/avatars/${req.file.filename}`;
+
 
     const updated = updateUser(userId, { avatar: avatarUrl });
     if (!updated) return res.status(500).json({ message: "Cập nhật avatar thất bại" });

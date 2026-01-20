@@ -56,7 +56,9 @@ export default function Login() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
-        <h2 className="text-2xl font-bold text-center mb-6">{message}</h2>
+        {message && (
+          <p className="text-center mt-4 text-red-500 font-medium">{message}</p>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700 mb-1">Email</label>
@@ -81,7 +83,7 @@ export default function Login() {
               className="w-full border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <p>Chưa có tài khoản? <Link className="text-blue-500 hover:text-blue-700 hover:underline cursor-pointer" href='/signIn'>Đăng ký ngay</Link></p>
+          <p className="text-center">Chưa có tài khoản? <Link className="text-center text-blue-500 hover:text-blue-700 hover:underline cursor-pointer" href='/signin'>Đăng ký ngay</Link></p>
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
@@ -90,9 +92,7 @@ export default function Login() {
           </button>
         </form>
 
-        {message && (
-          <p className="text-center mt-4 text-red-500 font-medium">{message}</p>
-        )}
+        
       </div>
     </div>
   );

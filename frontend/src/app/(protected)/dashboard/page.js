@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from "next/image";
 import Headers from '@/components/header'
 
 export default function Dashboard() {
@@ -95,7 +96,7 @@ export default function Dashboard() {
 
       {courses.length === 0 ? (
         <div className="flex flex-col items-center justify-center mt-20 text-gray-600">
-          <p className="text-lg mb-4">📭 Bạn chưa có khóa học nào</p>
+          <p className="text-lg mb-4">Bạn chưa có khóa học nào</p>
           <button
             onClick={() => router.push('/courses')}
             className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
@@ -104,16 +105,18 @@ export default function Dashboard() {
           </button>
         </div>
       ) : (
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
           {courses.map((course) => (
             <div
               key={course.id}
               className="bg-white rounded-lg shadow hover:shadow-lg transition transform hover:-translate-y-1"
             >
-              <img
+              <Image
                 src={course.image}
                 alt={course.title}
+                width={400}
+                height={200}
                 className="w-full h-40 object-cover rounded-t-lg"
               />
               <div className="p-4">

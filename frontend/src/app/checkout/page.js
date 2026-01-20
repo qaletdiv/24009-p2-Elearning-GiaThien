@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import Headers from "@/components/header";
 
 export default function CheckoutPage() {
@@ -29,12 +30,12 @@ export default function CheckoutPage() {
       return;
     }
 
-    
+
     const fetchCourse = fetch(`http://localhost:8080/api/courses/${courseId}`)
       .then((res) => res.json())
       .then((data) => setCourse(data));
 
-   
+
     const fetchEnroll = fetch(`http://localhost:8080/api/courses/${courseId}/enrollment`, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -76,9 +77,11 @@ export default function CheckoutPage() {
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-white rounded-lg shadow overflow-hidden">
-            <img
+            <Image
               src={course.image}
               alt={course.title}
+              width={400}
+              height={200}
               className="w-full h-48 object-cover"
             />
             <div className="p-4">
@@ -130,7 +133,7 @@ export default function CheckoutPage() {
 
             {isEnrolled ? (
               <div className="mt-4 p-3 rounded bg-green-50 border border-green-200 text-green-800">
-                Bạn đã đăng ký khóa học này rồi 
+                Bạn đã đăng ký khóa học này rồi
                 <button
                   onClick={() => router.push(`/courses/${courseId}`)}
                   className="ml-2 underline"
@@ -154,7 +157,7 @@ export default function CheckoutPage() {
                   Quay lại trang khóa học
                 </button>
 
-                
+
               </div>
             )}
           </div>

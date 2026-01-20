@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import Headers from "@/components/header";
 
 export default function PaymentPage() {
@@ -47,7 +48,7 @@ export default function PaymentPage() {
 
     setPaying(true);
     try {
-     
+
       const res = await fetch(`http://localhost:8080/api/courses/${courseId}/register`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
@@ -63,7 +64,7 @@ export default function PaymentPage() {
 
       alert("Thanh toán thành công! Đã đăng ký khóa học ");
 
-      
+
       router.replace(`/courses/${courseId}`);
     } catch (err) {
       console.error(err);
@@ -91,9 +92,11 @@ export default function PaymentPage() {
 
         <div className="bg-white rounded-lg shadow p-5">
           <div className="flex items-start gap-4">
-            <img
+            <Image
               src={course.image}
               alt={course.title}
+              width={400}
+              height={200}
               className="w-24 h-24 object-cover rounded"
             />
             <div className="flex-1">
@@ -108,15 +111,14 @@ export default function PaymentPage() {
             </div>
           </div>
 
-          
+
 
           <div className="mt-5 grid grid-cols-1 gap-3">
             <button
               onClick={handlePaySuccess}
               disabled={paying}
-              className={`w-full py-2 rounded text-white ${
-                paying ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
-              }`}
+              className={`w-full py-2 rounded text-white ${paying ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+                }`}
             >
               {paying ? "Đang xử lý..." : "Thanh toán"}
             </button>

@@ -22,9 +22,9 @@ let courses = [
   {
     id: "C01",
     title: "React Cơ Bản",
-    image: "/images/react-basic.jpg",
+    image: "/images/01.jpg",
     description: "Khóa học React cho người mới bắt đầu",
-    target:"Sau khi học xong bạn sẽ có các kiến thức cơ bản về React",
+    target: "Nắm được component, props/state, useEffect và làm được dự án nhỏ",
     category: "Công nghệ",
     level: "Cơ bản",
     price: 0,
@@ -32,44 +32,143 @@ let courses = [
   {
     id: "C02",
     title: "Next.js Nâng Cao",
-    image: "/images/next-advanced.jpg",
-    description:"Khóa học NextJS nâng cao",
-    target:"Sau khi học xong bạn sẽ thành thạo NextJS",
+    image: "/images/02.jpg",
+    description: "Xây dựng web hiện đại với Next.js App Router",
+    target: "Biết protected routes, data fetching, tối ưu performance, deploy",
     category: "Công nghệ",
     level: "Nâng cao",
     price: 400,
   },
   {
     id: "C03",
-    title: "HTML cơ bản",
-    image: "/images/html-basic.jpg",
-    description:"Khóa học HTML cho người mới bắt đầu",
-    target:"Sau khi học xong bạn sẽ có các kiến thức cơ bản về HTML",
+    title: "HTML Cơ Bản",
+    image: "/images/03.jpg",
+    description: "Nền tảng HTML từ số 0",
+    target: "Biết cấu trúc trang, semantic, form, table và best practices",
     category: "Công nghệ",
     level: "Cơ bản",
-    price: 400,
+    price: 200,
   },
   {
     id: "C04",
-    title: "CSS cơ bản",
-    image: "/images/css-basic.jpg",
-    description:"Khóa học CSS cho người mới bắt đầu",
-    target:"Sau khi học xong bạn sẽ có các kiến thức cơ bản về CSS",
+    title: "CSS Cơ Bản",
+    image: "/images/04.jpg",
+    description: "CSS cho người mới bắt đầu",
+    target: "Nắm box model, flexbox, responsive cơ bản",
     category: "Công nghệ",
     level: "Cơ bản",
-    price: 400,
+    price: 200,
   },
   {
     id: "C05",
-    title: "Javascript Nâng cao",
-    image: "/images/js-advanced.jpg",
-    description:"Khóa học Javascript nâng cao",
-    target:"Sau khi học xong bạn sẽ thành thạo Javascript",
+    title: "JavaScript Nâng Cao",
+    image: "/images/05.jpg",
+    description: "JS nâng cao: closure, async/await, prototype, patterns",
+    target: "Làm chủ async, hiểu scope/closure, viết JS sạch và mạnh",
     category: "Công nghệ",
     level: "Nâng cao",
     price: 400,
-  }
-]
+  },
+
+  // ===== Thiết kế =====
+  {
+    id: "C06",
+    title: "Photoshop Cơ Bản",
+    image: "/images/06.jpg",
+    description: "Từ cơ bản đến chỉnh ảnh, ghép ảnh, retouch",
+    target: "Làm được banner cơ bản, chỉnh màu, cắt ghép, export đúng chuẩn",
+    category: "Thiết kế",
+    level: "Cơ bản",
+    price: 300,
+  },
+  {
+    id: "C07",
+    title: "Illustrator Thiết Kế Vector",
+    image: "/images/07.jpg",
+    description: "Thiết kế vector & in ấn (logo, decal, tem nhãn)",
+    target: "Làm chủ pen tool, shape, xuất file in ấn chuẩn",
+    category: "Thiết kế",
+    level: "Trung cấp",
+    price: 450,
+  },
+  {
+    id: "C08",
+    title: "UI/UX cho người mới",
+    image: "/images/08.jpg",
+    description: "Tư duy UI/UX + thực hành Figma",
+    target: "Làm được wireframe, prototype, design system cơ bản",
+    category: "Thiết kế",
+    level: "Cơ bản",
+    price: 350,
+  },
+
+  // ===== Marketing =====
+  {
+    id: "C09",
+    title: "Content Marketing Thực chiến",
+    image: "/images/09.jpg",
+    description: "Viết nội dung bán hàng, xây kênh, lên kế hoạch content",
+    target: "Tự làm plan content 30 ngày, viết caption/ads hiệu quả",
+    category: "Marketing",
+    level: "Trung cấp",
+    price: 300,
+  },
+  {
+    id: "C10",
+    title: "Chạy quảng cáo Facebook Ads",
+    image: "/images/10.jpg",
+    description: "Từ cơ bản đến tối ưu chiến dịch",
+    target: "Biết target, setup BM, tối ưu CPM/CPC, đọc chỉ số",
+    category: "Marketing",
+    level: "Nâng cao",
+    price: 500,
+  },
+
+  // ===== Ngoại ngữ =====
+  {
+    id: "C11",
+    title: "Tiếng Anh giao tiếp cho người đi làm",
+    image: "/images/11.jpg",
+    description: "Giao tiếp công sở, email, meeting",
+    target: "Tự tin giao tiếp trong công việc và viết email cơ bản",
+    category: "Ngoại ngữ",
+    level: "Cơ bản",
+    price: 250,
+  },
+  {
+    id: "C12",
+    title: "Tiếng Nhật N5 nền tảng",
+    image: "/images/12.jpg",
+    description: "Hiragana, Katakana, mẫu câu căn bản",
+    target: "Nắm nền tảng N5, học tiếp N4 dễ dàng",
+    category: "Ngoại ngữ",
+    level: "Cơ bản",
+    price: 250,
+  },
+
+  // ===== Kinh doanh / Kỹ năng =====
+  {
+    id: "C13",
+    title: "Bán hàng & chốt đơn",
+    image: "/images/13.jpg",
+    description: "Kỹ năng tư vấn, xử lý từ chối, chốt đơn",
+    target: "Tăng tỷ lệ chốt, biết kịch bản bán hàng",
+    category: "Kinh doanh",
+    level: "Trung cấp",
+    price: 350,
+  },
+  {
+    id: "C14",
+    title: "Quản lý thời gian hiệu quả",
+    image: "/images/14.jpg",
+    description: "Lập kế hoạch, ưu tiên, chống trì hoãn",
+    target: "Biết dùng Eisenhower/Time-blocking và duy trì thói quen",
+    category: "Kỹ năng",
+    level: "Cơ bản",
+    price: 150,
+  },
+];
+
 
 let lessons = [
   // =========================
@@ -79,7 +178,7 @@ let lessons = [
     id: "L01",
     courseId: "C01",
     title: "Giới thiệu React",
-    completed: true,
+    completed: false,
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     content:
       "React là thư viện JavaScript dùng để xây dựng giao diện người dùng theo hướng component. Trong bài này bạn sẽ hiểu JSX, component, và tư duy UI theo trạng thái.",
@@ -109,7 +208,7 @@ let lessons = [
       "Phân biệt props (dữ liệu truyền từ cha -> con) và state (trạng thái nội bộ). Thực hành useState và render theo trạng thái.",
     resources: [
       { name: "Cheatsheet Props/State (PDF)", url: "/files/3.pdf" },
-     
+
     ],
   },
   {
@@ -134,7 +233,7 @@ let lessons = [
       "Tư duy vòng đời trong React hiện đại với useEffect: mount/update/unmount. Thực hành fetch API và cleanup effect.",
     resources: [
       { name: "useEffect Guide (PDF)", url: "/files/5.pdf" },
-      
+
     ],
   },
 
@@ -145,7 +244,7 @@ let lessons = [
     id: "L06",
     courseId: "C02",
     title: "Routing cơ bản",
-    completed: true,
+    completed: false,
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
     content:
       "Hiểu App Router, folder routes, dynamic routes, và navigation trong Next.js. Thực hành tạo trang /courses/[id].",
@@ -157,13 +256,13 @@ let lessons = [
     id: "L07",
     courseId: "C02",
     title: "Data Fetching",
-    completed: true,
+    completed: false,
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
     content:
       "Các cách fetch dữ liệu: client fetch, server fetch, caching và revalidate cơ bản. Lưu ý token trong client component.",
     resources: [
       { name: "Data Fetching (PDF)", url: "/files/7.pdf" },
-      
+
     ],
   },
   {
@@ -188,7 +287,7 @@ let lessons = [
       "Tạo API route trong Next.js, hiểu request/response, validate input và cấu trúc trả JSON chuẩn.",
     resources: [
       { name: "API Routes (PDF)", url: "/files/9.pdf" },
-      
+
     ],
   },
   {
@@ -229,7 +328,7 @@ let lessons = [
       "HTML là ngôn ngữ đánh dấu. Bài này học cấu trúc: doctype, html, head, body và ý nghĩa semantic.",
     resources: [
       { name: "HTML Basics (PDF)", url: "/files/12.pdf" },
-      
+
     ],
   },
   {
@@ -254,7 +353,7 @@ let lessons = [
       "Thực hành a, img, path ảnh, bảng table/thead/tbody/tr/td. Lưu ý alt, accessibility cơ bản.",
     resources: [
       { name: "Links/Images/Tables (PDF)", url: "/files/14.pdf" },
-      
+
     ],
   },
   {
@@ -295,7 +394,7 @@ let lessons = [
       "Hiểu margin, border, padding, content. Thực hành canh layout bằng box model và debug bằng devtools.",
     resources: [
       { name: "Box Model Practice (PDF)", url: "/files/17.pdf" },
-     
+
     ],
   },
   {
@@ -320,7 +419,7 @@ let lessons = [
       "Media query, breakpoint, tư duy mobile-first. Thực hành responsive trang landing đơn giản.",
     resources: [
       { name: "Responsive Guide (PDF)", url: "/files/19.pdf" },
-      
+
     ],
   },
 
@@ -337,7 +436,7 @@ let lessons = [
       "Nắm vững lexical scope, closure, hoisting, let/const/var. Đây là nền tảng để hiểu code JS nâng cao.",
     resources: [
       { name: "JS Advanced Notes (PDF)", url: "/files/20.pdf" },
-      
+
     ],
   },
   {
@@ -350,7 +449,7 @@ let lessons = [
       "Hiểu callback -> promise -> async/await. Thực hành fetch API và xử lý lỗi try/catch đúng chuẩn.",
     resources: [
       { name: "Async/Await Guide (PDF)", url: "/files/21.pdf" },
-      
+
     ],
   },
   {
@@ -375,8 +474,403 @@ let lessons = [
       "Prototype chain, class, this, bind/call/apply. Hiểu cách JS hoạt động phía dưới class syntax.",
     resources: [
       { name: "OOP in JS (PDF)", url: "/files/23.pdf" },
-      
+
     ],
+  },
+  // =========================
+  // C06 - Photoshop Cơ Bản
+  // =========================
+  {
+    id: "L24",
+    courseId: "C06",
+    title: "Giới thiệu Photoshop & giao diện",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    content:
+      "Làm quen workspace, panel, layer, thao tác cơ bản, cách lưu file PSD/JPG/PNG đúng chuẩn.",
+    resources: [{ name: "Photoshop Basics (PDF)", url: "/files/24.pdf" }],
+  },
+  {
+    id: "L25",
+    courseId: "C06",
+    title: "Cắt ghép ảnh với Selection",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    content:
+      "Học marquee/lasso/quick selection, refine edge, mask để cắt ghép sạch không bị viền.",
+    resources: [{ name: "Selection & Mask (PDF)", url: "/files/25.pdf" }],
+  },
+  {
+    id: "L26",
+    courseId: "C06",
+    title: "Chỉnh màu cơ bản & blend",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    content:
+      "Curves/Levels/HSL, color balance, blend mode. Tạo tone ảnh và phối màu cơ bản.",
+    resources: [{ name: "Color Correction (PDF)", url: "/files/26.pdf" }],
+  },
+  {
+    id: "L27",
+    courseId: "C06",
+    title: "Export ảnh đúng chuẩn",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    content:
+      "Export PNG/JPG, tối ưu dung lượng, kích thước, DPI, chuẩn đăng web & in ấn.",
+    resources: [{ name: "Export Guide (PDF)", url: "/files/27.pdf" }],
+  },
+
+  // =========================
+  // C07 - Illustrator Thiết Kế Vector
+  // =========================
+  {
+    id: "L28",
+    courseId: "C07",
+    title: "Giao diện Illustrator & công cụ cơ bản",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    content:
+      "Artboard, selection, align, stroke/fill. Làm quen hệ vector và cách quản lý layer.",
+    resources: [{ name: "AI Basics (PDF)", url: "/files/28.pdf" }],
+  },
+  {
+    id: "L29",
+    courseId: "C07",
+    title: "Pen Tool & vẽ logo đơn giản",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+    content:
+      "Pen tool, anchor/handle, curve mượt. Thực hành vẽ logo tối giản và icon.",
+    resources: [{ name: "Pen Tool Practice (PDF)", url: "/files/29.pdf" }],
+  },
+  {
+    id: "L30",
+    courseId: "C07",
+    title: "Màu sắc, gradient, pattern",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+    content:
+      "Swatches, gradient, pattern cơ bản. Tạo style tem nhãn/decal in ấn.",
+    resources: [{ name: "Color & Pattern (PDF)", url: "/files/30.pdf" }],
+  },
+  {
+    id: "L31",
+    courseId: "C07",
+    title: "Xuất file in ấn & cắt decal",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+    content:
+      "Xuất AI/PDF, outline font, bleed/crop marks, chuẩn in & die-cut cơ bản.",
+    resources: [{ name: "Print & Die-cut (PDF)", url: "/files/31.pdf" }],
+  },
+
+  // =========================
+  // C08 - UI/UX cho người mới
+  // =========================
+  {
+    id: "L32",
+    courseId: "C08",
+    title: "UI/UX là gì? Quy trình thiết kế",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
+    content:
+      "Hiểu UI vs UX, user journey, pain points, và quy trình từ research → wireframe → UI.",
+    resources: [{ name: "UIUX Overview (PDF)", url: "/files/32.pdf" }],
+  },
+  {
+    id: "L33",
+    courseId: "C08",
+    title: "Wireframe & bố cục",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    content:
+      "Lưới (grid), spacing, hierarchy. Tạo wireframe cho 1 trang sản phẩm/courses.",
+    resources: [{ name: "Wireframe Guide (PDF)", url: "/files/33.pdf" }],
+  },
+  {
+    id: "L34",
+    courseId: "C08",
+    title: "Figma cơ bản & component",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    content:
+      "Frame, auto-layout, component/variant. Tạo button/input/card dùng lại.",
+    resources: [{ name: "Figma Basics (PDF)", url: "/files/34.pdf" }],
+  },
+  {
+    id: "L35",
+    courseId: "C08",
+    title: "Prototype & handoff",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    content:
+      "Link prototype, flow, chia sẻ handoff cho dev: spacing, color, export asset.",
+    resources: [{ name: "Prototype & Handoff (PDF)", url: "/files/35.pdf" }],
+  },
+
+  // =========================
+  // C09 - Content Marketing
+  // =========================
+  {
+    id: "L36",
+    courseId: "C09",
+    title: "Content là gì? Chân dung khách hàng",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    content:
+      "Xác định tệp khách hàng, insight, mục tiêu nội dung và KPI cơ bản.",
+    resources: [{ name: "Customer Persona (PDF)", url: "/files/36.pdf" }],
+  },
+  {
+    id: "L37",
+    courseId: "C09",
+    title: "Framework viết bài (AIDA, PAS)",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    content:
+      "Viết caption/bài bán hàng theo AIDA, PAS; luyện headline, CTA rõ ràng.",
+    resources: [{ name: "Copywriting Frameworks (PDF)", url: "/files/37.pdf" }],
+  },
+  {
+    id: "L38",
+    courseId: "C09",
+    title: "Lập kế hoạch content 30 ngày",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+    content:
+      "Xây content pillar, lịch đăng, phân bổ định dạng: video, carousel, blog, reels.",
+    resources: [{ name: "30-day Plan Template (PDF)", url: "/files/38.pdf" }],
+  },
+  {
+    id: "L39",
+    courseId: "C09",
+    title: "Đo lường & tối ưu",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+    content:
+      "Đọc chỉ số reach/engagement/click, A/B headline và tối ưu nội dung theo dữ liệu.",
+    resources: [{ name: "Metrics & Optimization (PDF)", url: "/files/39.pdf" }],
+  },
+
+  // =========================
+  // C10 - Facebook Ads
+  // =========================
+  {
+    id: "L40",
+    courseId: "C10",
+    title: "Tổng quan Ads & cấu trúc chiến dịch",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+    content:
+      "Campaign/Adset/Ad, mục tiêu, pixel cơ bản và nguyên tắc setup sạch.",
+    resources: [{ name: "FB Ads Overview (PDF)", url: "/files/40.pdf" }],
+  },
+  {
+    id: "L41",
+    courseId: "C10",
+    title: "Targeting & creative",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
+    content:
+      "Target interest/lookalike, angle nội dung, tối ưu ảnh/video quảng cáo.",
+    resources: [{ name: "Targeting & Creative (PDF)", url: "/files/41.pdf" }],
+  },
+  {
+    id: "L42",
+    courseId: "C10",
+    title: "Tối ưu chi phí (CPC/CPM/CPA)",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    content:
+      "Đọc chỉ số, scaling, rule tắt/mở ads, xử lý học máy và phân bổ ngân sách.",
+    resources: [{ name: "Optimization Guide (PDF)", url: "/files/42.pdf" }],
+  },
+  {
+    id: "L43",
+    courseId: "C10",
+    title: "Case study & checklist chạy ads",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    content:
+      "Checklist trước khi chạy, lỗi thường gặp, case thực tế và cách tối ưu theo ngành.",
+    resources: [{ name: "Ads Checklist (PDF)", url: "/files/43.pdf" }],
+  },
+
+  // =========================
+  // C11 - English for Work
+  // =========================
+  {
+    id: "L44",
+    courseId: "C11",
+    title: "Chào hỏi & giao tiếp công sở",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    content:
+      "Mẫu câu chào hỏi, small talk, giới thiệu bản thân và cách phản hồi lịch sự.",
+    resources: [{ name: "Office Phrases (PDF)", url: "/files/44.pdf" }],
+  },
+  {
+    id: "L45",
+    courseId: "C11",
+    title: "Email cơ bản",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    content:
+      "Cấu trúc email, subject, opening/closing, tone lịch sự, mẫu email hay dùng.",
+    resources: [{ name: "Email Templates (PDF)", url: "/files/45.pdf" }],
+  },
+  {
+    id: "L46",
+    courseId: "C11",
+    title: "Meeting & trình bày ý kiến",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    content:
+      "Cách nêu ý kiến, đồng ý/không đồng ý, hỏi lại, tóm tắt và action items.",
+    resources: [{ name: "Meeting Phrases (PDF)", url: "/files/46.pdf" }],
+  },
+  {
+    id: "L47",
+    courseId: "C11",
+    title: "Thực hành tình huống",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+    content:
+      "Role-play: trao đổi deadline, báo cáo tiến độ, xin nghỉ, xử lý sự cố.",
+    resources: [{ name: "Role-play Scenarios (PDF)", url: "/files/47.pdf" }],
+  },
+
+  // =========================
+  // C12 - Japanese N5
+  // =========================
+  {
+    id: "L48",
+    courseId: "C12",
+    title: "Hiragana & phát âm",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+    content:
+      "Bảng Hiragana, quy tắc phát âm, trường âm, âm ngắt. Luyện đọc chuẩn.",
+    resources: [{ name: "Hiragana Sheet (PDF)", url: "/files/48.pdf" }],
+  },
+  {
+    id: "L49",
+    courseId: "C12",
+    title: "Katakana & từ mượn",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+    content:
+      "Katakana, cách đọc từ mượn, dấu kéo dài, quy tắc ghép âm.",
+    resources: [{ name: "Katakana Sheet (PDF)", url: "/files/49.pdf" }],
+  },
+  {
+    id: "L50",
+    courseId: "C12",
+    title: "Mẫu câu N5 thông dụng",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
+    content:
+      "です/ます, これ/それ/あれ, trợ từ は/が/を/に/で. Thực hành hội thoại ngắn.",
+    resources: [{ name: "N5 Patterns (PDF)", url: "/files/50.pdf" }],
+  },
+  {
+    id: "L51",
+    courseId: "C12",
+    title: "Từ vựng & luyện đề mini",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    content:
+      "Từ vựng chủ đề: gia đình, thời gian, mua sắm. Mini test luyện phản xạ.",
+    resources: [{ name: "N5 Vocab + Mini Test (PDF)", url: "/files/51.pdf" }],
+  },
+
+  // =========================
+  // C13 - Sales & Closing
+  // =========================
+  {
+    id: "L52",
+    courseId: "C13",
+    title: "Tư duy bán hàng & quy trình tư vấn",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    content:
+      "Hiểu pain-point, quy trình tư vấn từ chào hỏi → khai thác nhu cầu → đề xuất.",
+    resources: [{ name: "Sales Process (PDF)", url: "/files/52.pdf" }],
+  },
+  {
+    id: "L53",
+    courseId: "C13",
+    title: "Kịch bản tư vấn & hỏi đúng",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    content:
+      "Kỹ thuật đặt câu hỏi (SPIN), ghi nhận nhu cầu và tạo niềm tin.",
+    resources: [{ name: "SPIN Questions (PDF)", url: "/files/53.pdf" }],
+  },
+  {
+    id: "L54",
+    courseId: "C13",
+    title: "Xử lý từ chối",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    content:
+      "Phản hồi các từ chối: đắt, chưa cần, sợ rủi ro. Kỹ thuật phản biện mềm.",
+    resources: [{ name: "Objection Handling (PDF)", url: "/files/54.pdf" }],
+  },
+  {
+    id: "L55",
+    courseId: "C13",
+    title: "Chốt đơn & chăm sóc sau bán",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    content:
+      "Kỹ thuật chốt, tạo urgency đúng cách, chăm sóc sau bán để upsell/referral.",
+    resources: [{ name: "Closing Checklist (PDF)", url: "/files/55.pdf" }],
+  },
+
+  // =========================
+  // C14 - Time Management
+  // =========================
+  {
+    id: "L56",
+    courseId: "C14",
+    title: "Quản lý thời gian là gì?",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+    content:
+      "Xác định mục tiêu, đo thời gian thực tế, nhận diện việc quan trọng.",
+    resources: [{ name: "Time Mgmt Basics (PDF)", url: "/files/56.pdf" }],
+  },
+  {
+    id: "L57",
+    courseId: "C14",
+    title: "Ma trận Eisenhower",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+    content:
+      "Phân loại việc quan trọng/khẩn cấp. Cách giảm việc gấp và tăng việc quan trọng.",
+    resources: [{ name: "Eisenhower Matrix (PDF)", url: "/files/57.pdf" }],
+  },
+  {
+    id: "L58",
+    courseId: "C14",
+    title: "Time-blocking & Pomodoro",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+    content:
+      "Lập lịch theo block, Pomodoro, deep work. Cách tránh phân tâm.",
+    resources: [{ name: "Time Blocking (PDF)", url: "/files/58.pdf" }],
+  },
+  {
+    id: "L59",
+    courseId: "C14",
+    title: "Chống trì hoãn & duy trì thói quen",
+    completed: false,
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
+    content:
+      "Kỹ thuật 2 phút, thói quen nhỏ, tracking và review tuần để bền vững.",
+    resources: [{ name: "Anti-Procrastination (PDF)", url: "/files/59.pdf" }],
   },
 ];
 
@@ -485,16 +979,195 @@ let courseQuizzes = [
       },
     ],
   },
-
+  {
+    courseId: "C06",
+    title: "Bài kiểm tra cuối khóa: Photoshop Cơ Bản",
+    questions: [
+      {
+        id: 1,
+        question: "Công cụ nào phù hợp nhất để cắt đối tượng và làm mượt viền?",
+        options: ["Brush", "Quick Selection + Mask", "Eraser", "Crop Tool"],
+        correct: 1,
+        explanation: "Quick Selection kết hợp Mask giúp cắt sạch và chỉnh viền tốt."
+      },
+      {
+        id: 2,
+        question: "Định dạng nào phù hợp để giữ nền trong suốt?",
+        options: ["JPG", "PNG", "MP4", "DOCX"],
+        correct: 1,
+        explanation: "PNG hỗ trợ alpha transparency."
+      },
+    ],
+  },
+  {
+    courseId: "C07",
+    title: "Bài kiểm tra cuối khóa: Illustrator Vector",
+    questions: [
+      {
+        id: 1,
+        question: "Công cụ nào dùng để vẽ đường cong vector chính xác?",
+        options: ["Pen Tool", "Eraser", "Hand Tool", "Type Tool"],
+        correct: 0,
+        explanation: "Pen Tool là công cụ chuẩn để vẽ path vector."
+      },
+      {
+        id: 2,
+        question: "Để in ấn an toàn, thường cần làm gì với font?",
+        options: ["Giữ nguyên", "Outline/Convert to curves", "Xóa font", "Đổi sang PNG"],
+        correct: 1,
+        explanation: "Outline font để tránh lỗi thiếu font khi in."
+      },
+    ],
+  },
+  {
+    courseId: "C08",
+    title: "Bài kiểm tra cuối khóa: UI/UX cho người mới",
+    questions: [
+      {
+        id: 1,
+        question: "Wireframe là gì?",
+        options: ["Bản thiết kế màu hoàn chỉnh", "Bản phác bố cục", "Code giao diện", "Bảng dữ liệu"],
+        correct: 1,
+        explanation: "Wireframe là bản phác thảo bố cục và cấu trúc."
+      },
+      {
+        id: 2,
+        question: "Auto-layout trong Figma giúp gì?",
+        options: ["Tăng FPS", "Tự căn chỉnh spacing khi nội dung đổi", "Tạo animation", "Xuất PDF"],
+        correct: 1,
+        explanation: "Auto-layout giúp layout linh hoạt theo nội dung."
+      },
+    ],
+  },
+  {
+    courseId: "C09",
+    title: "Bài kiểm tra cuối khóa: Content Marketing",
+    questions: [
+      {
+        id: 1,
+        question: "AIDA gồm những bước nào?",
+        options: ["Analyze-Improve-Do-Act", "Attention-Interest-Desire-Action", "Ask-Inform-Deliver-Agree", "None"],
+        correct: 1,
+        explanation: "AIDA: Attention, Interest, Desire, Action."
+      },
+      {
+        id: 2,
+        question: "KPI nào phù hợp để đo hiệu quả bài viết kéo traffic?",
+        options: ["Reach", "Click/CTR", "Like", "Comment"],
+        correct: 1,
+        explanation: "Click/CTR phù hợp để đo kéo traffic."
+      },
+    ],
+  },
+  {
+    courseId: "C10",
+    title: "Bài kiểm tra cuối khóa: Facebook Ads",
+    questions: [
+      {
+        id: 1,
+        question: "Trong cấu trúc quảng cáo, nơi đặt target thường là?",
+        options: ["Campaign", "Adset", "Ad", "Page"],
+        correct: 1,
+        explanation: "Targeting thường nằm ở cấp Adset."
+      },
+      {
+        id: 2,
+        question: "CPA là viết tắt của?",
+        options: ["Cost Per Action", "Click Per Ads", "Cost Per Audience", "Campaign Performance Ads"],
+        correct: 0,
+        explanation: "CPA = Cost Per Action."
+      },
+    ],
+  },
+  {
+    courseId: "C11",
+    title: "Bài kiểm tra cuối khóa: English for Work",
+    questions: [
+      {
+        id: 1,
+        question: "Trong email lịch sự, câu mở đầu phù hợp là?",
+        options: ["Hey bro", "Dear ... / Hello ...", "Yo", "Sup"],
+        correct: 1,
+        explanation: "Dear/Hello là cách mở đầu lịch sự trong công việc."
+      },
+      {
+        id: 2,
+        question: "Trong meeting, câu nào đúng để xin nhắc lại?",
+        options: ["Repeat now!", "Could you please repeat that?", "Say again!", "Talk louder!"],
+        correct: 1,
+        explanation: "Câu lịch sự: Could you please repeat that?"
+      },
+    ],
+  },
+  {
+    courseId: "C12",
+    title: "Bài kiểm tra cuối khóa: Tiếng Nhật N5",
+    questions: [
+      {
+        id: 1,
+        question: "Hiragana dùng để làm gì?",
+        options: ["Viết số", "Viết từ mượn", "Viết tiếng Nhật cơ bản", "Viết tiếng Anh"],
+        correct: 2,
+        explanation: "Hiragana dùng cho từ thuần Nhật và ngữ pháp."
+      },
+      {
+        id: 2,
+        question: "Trợ từ を thường đi với?",
+        options: ["Chủ ngữ", "Tân ngữ", "Địa điểm", "Thời gian"],
+        correct: 1,
+        explanation: "を thường đánh dấu tân ngữ."
+      },
+    ],
+  },
+  {
+    courseId: "C13",
+    title: "Bài kiểm tra cuối khóa: Bán hàng & Chốt đơn",
+    questions: [
+      {
+        id: 1,
+        question: "SPIN là kỹ thuật gì?",
+        options: ["Chạy ads", "Đặt câu hỏi khai thác nhu cầu", "Thiết kế UI", "Làm video"],
+        correct: 1,
+        explanation: "SPIN là kỹ thuật đặt câu hỏi để khai thác nhu cầu."
+      },
+      {
+        id: 2,
+        question: "Từ chối 'giá cao' nên xử lý tốt nhất bằng?",
+        options: ["Cãi lại khách", "So sánh giá rẻ hơn", "Nhấn mạnh giá trị/benefit", "Bỏ qua"],
+        correct: 2,
+        explanation: "Tập trung vào giá trị/benefit và chứng minh hiệu quả."
+      },
+    ],
+  },
+  {
+    courseId: "C14",
+    title: "Bài kiểm tra cuối khóa: Quản lý thời gian",
+    questions: [
+      {
+        id: 1,
+        question: "Ma trận Eisenhower gồm mấy nhóm chính?",
+        options: ["2", "3", "4", "5"],
+        correct: 2,
+        explanation: "Eisenhower chia 4 nhóm: Quan trọng/khẩn cấp."
+      },
+      {
+        id: 2,
+        question: "Pomodoro phổ biến là bao nhiêu phút tập trung?",
+        options: ["10", "25", "45", "60"],
+        correct: 1,
+        explanation: "Pomodoro phổ biến là 25 phút tập trung."
+      },
+    ],
+  },
 ];
 
 // Liên kết user ↔ khóa học (giả lập)
 // progress tính theo % số bài học đã hoàn thành
 let userCourses = [
-  { userId: 1, courseId: "C01", progress: 60 },
-  { userId: 1, courseId: "C02", progress: 30 },
-  { userId: 2, courseId: "C02", progress: 20 },
-  { userId: 3, courseId: "C01", progress: 40 },
+  { userId: 1, courseId: "C01", progress: 0 },
+  { userId: 1, courseId: "C02", progress: 0 },
+  { userId: 2, courseId: "C02", progress: 0 },
+  { userId: 3, courseId: "C01", progress: 0 },
   { userId: 1, courseId: "C03", progress: 0 },
   { userId: 1, courseId: "C04", progress: 0 },
   { userId: 1, courseId: "C05", progress: 0 },

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Headers from "@/components/header";
 
 export default function ProfilePage() {
@@ -119,8 +120,15 @@ export default function ProfilePage() {
         throw new Error(data.message || "Upload avatar thất bại");
       }
 
+      const normalizeUrl = (u) => {
+        if (!u) return "";
+        if (u.startsWith("blob:")) return u;
+        if (u.startsWith("http")) return u;
+        return `http://localhost:8080${u}`;
+      };
+
       const newAvatar = data.avatar || data?.user?.avatar || "";
-      setAvatar(newAvatar);
+      setAvatar(newAvatar ? `${normalizeUrl(newAvatar)}?t=${Date.now()}` : "");
 
 
       setAvatarFile(null);
@@ -154,10 +162,7 @@ export default function ProfilePage() {
         setMessage("Vui lòng nhập mật khẩu hiện tại");
         return;
       }
-      if (!newPassword) {
-        setMessage("Vui lòng nhập mật khẩu mới");
-        return;
-      }
+
       if (newPassword !== confirmNewPassword) {
         setMessage("Mật khẩu mới không khớp");
         return;
@@ -242,16 +247,16 @@ export default function ProfilePage() {
 
           <div className="bg-white rounded-lg shadow p-5">
             <div className="flex flex-col items-center gap-3">
-              <img
+              <Image
                 src={avatarPreview || avatar || "/images/default-avatar.jpg"}
                 alt="avatar"
+                width={400}
+                height={200}
                 className="w-28 h-28 rounded-full object-cover border"
               />
 
               <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Chọn ảnh đại diện
-                </label>
+
                 <div className="w-full">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Chọn ảnh đại diện
@@ -292,11 +297,11 @@ export default function ProfilePage() {
                 <p className="text-xs text-gray-500 mt-2">PNG/JPG/WEBP • tối đa 2MB</p>
               </div>
 
-             
+
             </div>
           </div>
 
-         
+
           <div className="md:col-span-2 bg-white rounded-lg shadow p-5">
             <form onSubmit={handleSaveProfile} className="space-y-5">
               <div>

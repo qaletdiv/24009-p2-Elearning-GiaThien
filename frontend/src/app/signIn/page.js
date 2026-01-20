@@ -51,7 +51,7 @@ export default function SignIn() {
         <h1 className="text-2xl font-bold text-center mb-6">Sign Up</h1>
         
         {message && (
-          <p className="mb-4 text-center text-red-500">{message}</p>
+          <p className="text-center mt-4 text-red-500 font-medium">{message}</p>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -102,7 +102,7 @@ export default function SignIn() {
               className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-            <p>Đã có tài khoản? <Link className="text-blue-500 hover:text-blue-700 hover:underline cursor-pointer" href='/logIn'>Đăng nhập ngay</Link></p>
+            <p>Đã có tài khoản? <Link className="text-blue-500 hover:text-blue-700 hover:underline cursor-pointer" href='/login'>Đăng nhập ngay</Link></p>
           <button
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition duration-200"
