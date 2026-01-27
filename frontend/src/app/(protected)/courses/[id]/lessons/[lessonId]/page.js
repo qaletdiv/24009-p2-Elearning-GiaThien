@@ -1,107 +1,222 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import Headers from '@/components/header'
+import { useEffect, useMemo, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import Headers from "@/components/header";
+
 export default function LessonPage() {
-  const { id, lessonId } = useParams()
-  const [lesson, setLesson] = useState(null)
-  const [lessons, setLessons] = useState([])
-  const router = useRouter()
+  const { id, lessonId } = useParams();
+  const router = useRouter();
 
-  // Lấy token
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  const [lesson, setLesson] = useState(null);
+  const [lessons, setLessons] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Lấy dữ liệu bài học và danh sách bài học
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+  // ===== helper: fetch JSON an toàn (xử lý 403 blocked) =====
+  const fetchJSON = async (url, options) => {
+    const res = await fetch(url, options);
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok, status: res.status, data };
+  };
+
+  // ===== current index + previous status =====
+  const currentIndex = useMemo(() => {
+    if (!Array.isArray(lessons)) return -1;
+    return lessons.findIndex((l) => String(l.id) === String(lessonId));
+  }, [lessons, lessonId]);
+
+  const prevLesson = useMemo(() => {
+    if (currentIndex > 0) return lessons[currentIndex - 1];
+    return null;
+  }, [lessons, currentIndex]);
+
+  const nextLesson = useMemo(() => {
+    if (currentIndex >= 0 && currentIndex < lessons.length - 1) return lessons[currentIndex + 1];
+    return null;
+  }, [lessons, currentIndex]);
+
+  const isPrevCompleted = useMemo(() => {
+    if (currentIndex <= 0) return true;
+    return !!lessons[currentIndex - 1]?.completed;
+  }, [lessons, currentIndex]);
+
+  const canGoNext = !!nextLesson && !!lesson?.completed; // ✅ chỉ cho qua bài sau khi bài hiện tại completed
+
+  // ===== Load lesson + list lessons =====
   useEffect(() => {
     if (!token) {
-      router.push('/login')
-      return
+      router.push("/login");
+      return;
     }
 
-    Promise.all([
-      fetch(`http://localhost:8080/api/courses/${id}/lessons/${lessonId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      }).then(res => res.json()),
-      fetch(`http://localhost:8080/api/courses/${id}/lessons`, {
-        headers: { Authorization: `Bearer ${token}` }
-      }).then(res => res.json())
-    ])
-      .then(([lessonData, lessonsData]) => {
-        console.log('Lesson data:', lessonData)
-        console.log('Lessons data:', lessonsData)
-        console.log('Lessons is array:', Array.isArray(lessonsData))
-        setLesson(lessonData)
-        setLessons(Array.isArray(lessonsData) ? lessonsData : [])
-      })
-      .catch(err => console.error(err))
-  }, [id, lessonId])
+    let cancelled = false;
 
-  const handleComplete = async () => {
-    try {
-      const res = await fetch(`http://localhost:8080/api/courses/${id}/lessons/${lessonId}/complete`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` }
-      })
+    const load = async () => {
+      setLoading(true);
 
-      if (res.ok) {
-        alert('Đã đánh dấu hoàn thành!')
-        setLesson(prev => ({ ...prev, completed: true }))
+      // luôn load list lessons trước để biết trạng thái completed
+      const lessonsRes = await fetchJSON(`http://localhost:8080/api/courses/${id}/lessons`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-        // Cập nhật danh sách lessons để cập nhật trạng thái
-        const lessonsRes = await fetch(`http://localhost:8080/api/courses/${id}/lessons`, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-        if (lessonsRes.ok) {
-          const updatedLessons = await lessonsRes.json()
-          setLessons(updatedLessons)
+      if (cancelled) return;
+
+      if (!lessonsRes.ok) {
+        // token lỗi -> về login
+        if (lessonsRes.status === 401 || lessonsRes.status === 403) {
+          localStorage.removeItem("token");
+          router.replace("/login");
+          return;
         }
+        console.error("Load lessons error:", lessonsRes.data);
+        setLessons([]);
       } else {
-        alert('Có lỗi xảy ra khi đánh dấu hoàn thành!')
+        setLessons(Array.isArray(lessonsRes.data) ? lessonsRes.data : []);
+      }
+
+      // load lesson detail
+      const lessonRes = await fetchJSON(`http://localhost:8080/api/courses/${id}/lessons/${lessonId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (cancelled) return;
+
+      
+      if (!lessonRes.ok) {
+        if (lessonRes.status === 401 || lessonRes.status === 403) {
+          // case 403 blocked: { blocked, requiredLessonId, message }
+          if (lessonRes.data?.blocked && lessonRes.data?.requiredLessonId) {
+            alert(lessonRes.data.message || "Bạn cần hoàn thành bài trước đó.");
+            router.replace(`/courses/${id}/lessons/${lessonRes.data.requiredLessonId}`);
+            return;
+          }
+
+          // token hết hạn / không hợp lệ
+          localStorage.removeItem("token");
+          router.replace("/login");
+          return;
+        }
+
+        console.error("Load lesson error:", lessonRes.data);
+        setLesson(null);
+        setLoading(false);
+        return;
+      }
+
+      setLesson(lessonRes.data);
+      setLoading(false);
+    };
+
+    load().catch((e) => {
+      console.error(e);
+      setLoading(false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [id, lessonId, router, token]);
+
+  // ===== Mark complete =====
+  const handleComplete = async () => {
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+
+    try {
+      const res = await fetchJSON(
+        `http://localhost:8080/api/courses/${id}/lessons/${lessonId}/complete`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!res.ok) {
+        alert(res.data?.message || "Có lỗi xảy ra khi đánh dấu hoàn thành!");
+        return;
+      }
+
+      alert("Đã đánh dấu hoàn thành!");
+      setLesson((prev) => ({ ...prev, completed: true }));
+
+      
+      const lessonsRes = await fetchJSON(`http://localhost:8080/api/courses/${id}/lessons`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (lessonsRes.ok) {
+        setLessons(Array.isArray(lessonsRes.data) ? lessonsRes.data : []);
       }
     } catch (error) {
-      console.error('Error completing lesson:', error)
-      alert('Có lỗi xảy ra khi đánh dấu hoàn thành!')
+      console.error("Error completing lesson:", error);
+      alert("Có lỗi xảy ra khi đánh dấu hoàn thành!");
     }
-  }
+  };
 
-  if (!lesson) return <p className="p-6">Đang tải bài học...</p>
 
-  // Tìm bài trước và sau
-  const currentIndex = (Array.isArray(lessons) && lessons.length > 0) ? lessons.findIndex(l => l.id === lessonId) : -1
-  const prevLesson = (Array.isArray(lessons) && currentIndex > 0) ? lessons[currentIndex - 1] : null
-  const nextLesson = (Array.isArray(lessons) && currentIndex >= 0 && currentIndex < lessons.length - 1) ? lessons[currentIndex + 1] : null
+  const handleClickLesson = (l, index) => {
+    // luôn cho click bài hiện tại
+    if (String(l.id) === String(lessonId)) return;
+
+    
+    if (index === 0) {
+      router.push(`/courses/${id}/lessons/${l.id}`);
+      return;
+    }
+
+    const prevDone = !!lessons[index - 1]?.completed;
+    if (!prevDone) {
+      alert("Bạn cần hoàn thành bài học trước đó trước khi học bài này.");
+      return;
+    }
+
+    router.push(`/courses/${id}/lessons/${l.id}`);
+  };
+
+  if (loading) return <p className="p-6">Đang tải bài học...</p>;
+  if (!lesson) return <p className="p-6 text-red-600">Không tải được bài học.</p>;
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       <Headers />
 
       <div className="flex">
-
+        
         <aside className="w-72 bg-white border-r p-4 min-h-[calc(100vh-64px)]">
           <h2 className="text-lg font-semibold mb-3">Danh sách bài học</h2>
+
           <ul className="space-y-2">
-            {Array.isArray(lessons) &&
-              lessons.map((l) => (
+            {lessons.map((l, index) => {
+              const prevDone = index === 0 ? true : !!lessons[index - 1]?.completed;
+              const isLocked = !prevDone; // 🔒 nếu bài trước chưa xong
+              const isActive = String(l.id) === String(lessonId);
+
+              return (
                 <li
                   key={l.id}
-                  onClick={() => router.push(`/courses/${id}/lessons/${l.id}`)}
-                  className={`cursor-pointer p-2 rounded transition ${l.id == lessonId ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100"
-                    }`}
+                  onClick={() => handleClickLesson(l, index)}
+                  className={`p-2 rounded transition
+                    ${isActive ? "bg-blue-100 text-blue-700" : ""}
+                    ${isLocked && !isActive ? "bg-gray-50 text-gray-400 cursor-not-allowed" : "cursor-pointer hover:bg-gray-100"}
+                  `}
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-sm">{l.title}</span>
-                    <span className="text-sm">{l.completed ? "✅" : ""}</span>
+                    <span className="text-sm">
+                      {l.completed ? "Xong" : isLocked && !isActive ? "Khóa" : ""}
+                    </span>
                   </div>
                 </li>
-              ))}
+              );
+            })}
           </ul>
         </aside>
 
-        {/* Main content */}
+       
         <main className="flex-1 p-6">
-
           <div className="mb-4">
             <button
               onClick={() => router.push(`/courses/${id}`)}
@@ -114,6 +229,19 @@ export default function LessonPage() {
             </button>
           </div>
 
+          
+          {!isPrevCompleted && currentIndex > 0 ? (
+            <div className="mb-4 p-4 border rounded bg-yellow-50 text-yellow-800">
+              Bạn cần hoàn thành bài <b>{prevLesson?.title}</b> trước khi học bài này.
+              <button
+                onClick={() => router.push(`/courses/${id}/lessons/${prevLesson?.id}`)}
+                className="ml-3 px-3 py-1 rounded bg-yellow-600 text-white hover:bg-yellow-700 text-sm"
+              >
+                Quay về bài trước
+              </button>
+            </div>
+          ) : null}
+
           <h1 className="text-2xl font-bold mb-4">{lesson.title}</h1>
 
           <video src={lesson.videoUrl} controls className="w-full max-w-4xl rounded mb-4 bg-black" />
@@ -123,12 +251,10 @@ export default function LessonPage() {
           {Array.isArray(lesson.resources) && lesson.resources.length > 0 ? (
             <div className="mt-6 p-4 bg-white border rounded">
               <h3 className="font-semibold text-lg mb-3">Tài liệu bài học</h3>
-
               <ul className="space-y-2">
                 {lesson.resources.map((r, idx) => (
                   <li key={idx} className="flex items-center justify-between gap-3">
                     <span className="text-gray-800">{r.name}</span>
-
                     <a
                       href={`http://localhost:8080${r.url}`}
                       target="_blank"
@@ -147,13 +273,13 @@ export default function LessonPage() {
             </div>
           )}
 
-
           <div className="flex flex-wrap items-center gap-3 mt-6">
             <button
               onClick={handleComplete}
               disabled={lesson.completed}
-              className={`px-4 py-2 rounded ${lesson.completed ? "bg-gray-400 text-white" : "bg-green-600 hover:bg-green-700 text-white"
-                }`}
+              className={`px-4 py-2 rounded ${
+                lesson.completed ? "bg-gray-400 text-white" : "bg-green-600 hover:bg-green-700 text-white"
+              }`}
             >
               {lesson.completed ? "Đã hoàn thành" : "Đánh dấu hoàn thành"}
             </button>
@@ -166,10 +292,21 @@ export default function LessonPage() {
                 Bài trước
               </button>
             )}
+
+            
             {nextLesson && (
               <button
-                onClick={() => router.push(`/courses/${id}/lessons/${nextLesson.id}`)}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                onClick={() => {
+                  if (!lesson.completed) {
+                    alert("Bạn cần hoàn thành bài hiện tại trước khi qua bài tiếp theo.");
+                    return;
+                  }
+                  router.push(`/courses/${id}/lessons/${nextLesson.id}`);
+                }}
+                className={`px-4 py-2 rounded ${
+                  canGoNext ? "bg-blue-600 text-white hover:bg-blue-700" : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                }`}
+                disabled={!canGoNext}
               >
                 Bài tiếp theo
               </button>
@@ -193,5 +330,5 @@ export default function LessonPage() {
         </main>
       </div>
     </div>
-  )
+  );
 }

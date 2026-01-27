@@ -178,7 +178,7 @@ let lessons = [
     id: "L01",
     courseId: "C01",
     title: "Giới thiệu React",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     content:
       "React là thư viện JavaScript dùng để xây dựng giao diện người dùng theo hướng component. Trong bài này bạn sẽ hiểu JSX, component, và tư duy UI theo trạng thái.",
@@ -190,7 +190,7 @@ let lessons = [
     id: "L02",
     courseId: "C01",
     title: "Component cơ bản",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     content:
       "Học cách tạo functional component, props, và tái sử dụng UI. Bạn sẽ xây dựng component Button/Card và luyện tập tách UI.",
@@ -202,7 +202,7 @@ let lessons = [
     id: "L03",
     courseId: "C01",
     title: "Props và State",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     content:
       "Phân biệt props (dữ liệu truyền từ cha -> con) và state (trạng thái nội bộ). Thực hành useState và render theo trạng thái.",
@@ -215,7 +215,7 @@ let lessons = [
     id: "L04",
     courseId: "C01",
     title: "Event Handling",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     content:
       "Xử lý sự kiện trong React: onClick, onChange, onSubmit. Làm form đơn giản và validate dữ liệu cơ bản.",
@@ -227,7 +227,7 @@ let lessons = [
     id: "L05",
     courseId: "C01",
     title: "Lifecycle Methods",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     content:
       "Tư duy vòng đời trong React hiện đại với useEffect: mount/update/unmount. Thực hành fetch API và cleanup effect.",
@@ -244,7 +244,7 @@ let lessons = [
     id: "L06",
     courseId: "C02",
     title: "Routing cơ bản",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
     content:
       "Hiểu App Router, folder routes, dynamic routes, và navigation trong Next.js. Thực hành tạo trang /courses/[id].",
@@ -256,7 +256,7 @@ let lessons = [
     id: "L07",
     courseId: "C02",
     title: "Data Fetching",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
     content:
       "Các cách fetch dữ liệu: client fetch, server fetch, caching và revalidate cơ bản. Lưu ý token trong client component.",
@@ -269,7 +269,7 @@ let lessons = [
     id: "L08",
     courseId: "C02",
     title: "Server Actions",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
     content:
       "Giới thiệu Server Actions (khái niệm), cách tổ chức form submit, và best-practices tránh lộ secret ở client.",
@@ -281,7 +281,7 @@ let lessons = [
     id: "L09",
     courseId: "C02",
     title: "API Routes",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
     content:
       "Tạo API route trong Next.js, hiểu request/response, validate input và cấu trúc trả JSON chuẩn.",
@@ -294,7 +294,7 @@ let lessons = [
     id: "L10",
     courseId: "C02",
     title: "Middleware",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
     content:
       "Middleware dùng để chặn route, kiểm tra auth, redirect. Thực hành protected routes và pattern an toàn.",
@@ -306,7 +306,7 @@ let lessons = [
     id: "L11",
     courseId: "C02",
     title: "Deployment",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
     content:
       "Triển khai Next.js: build, env variables, cấu hình production. Lưu ý CORS/backend và đường dẫn asset.",
@@ -322,7 +322,7 @@ let lessons = [
     id: "L12",
     courseId: "C03",
     title: "Giới thiệu HTML & cấu trúc trang",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     content:
       "HTML là ngôn ngữ đánh dấu. Bài này học cấu trúc: doctype, html, head, body và ý nghĩa semantic.",
@@ -335,7 +335,7 @@ let lessons = [
     id: "L13",
     courseId: "C03",
     title: "Thẻ văn bản & danh sách",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     content:
       "Học h1-h6, p, strong/em, block/inline và ul/ol/li. Thực hành tạo bài viết đơn giản.",
@@ -347,7 +347,7 @@ let lessons = [
     id: "L14",
     courseId: "C03",
     title: "Link, Image, Table",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     content:
       "Thực hành a, img, path ảnh, bảng table/thead/tbody/tr/td. Lưu ý alt, accessibility cơ bản.",
@@ -360,7 +360,7 @@ let lessons = [
     id: "L15",
     courseId: "C03",
     title: "Form cơ bản",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     content:
       "input, textarea, select, label, button và submit. Thực hành form đăng ký + validate cơ bản.",
@@ -376,7 +376,7 @@ let lessons = [
     id: "L16",
     courseId: "C04",
     title: "Giới thiệu CSS & selector",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     content:
       "Cách nhúng CSS, selector cơ bản (class, id), độ ưu tiên (specificity) và reset/normalize.",
@@ -388,7 +388,7 @@ let lessons = [
     id: "L17",
     courseId: "C04",
     title: "Box model",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
     content:
       "Hiểu margin, border, padding, content. Thực hành canh layout bằng box model và debug bằng devtools.",
@@ -401,7 +401,7 @@ let lessons = [
     id: "L18",
     courseId: "C04",
     title: "Flexbox",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
     content:
       "Cách dùng display:flex, justify-content, align-items, gap, wrap. Thực hành layout card/grid đơn giản.",
@@ -413,7 +413,7 @@ let lessons = [
     id: "L19",
     courseId: "C04",
     title: "Responsive cơ bản",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
     content:
       "Media query, breakpoint, tư duy mobile-first. Thực hành responsive trang landing đơn giản.",
@@ -430,7 +430,7 @@ let lessons = [
     id: "L20",
     courseId: "C05",
     title: "Scope, Closure, Hoisting",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
     content:
       "Nắm vững lexical scope, closure, hoisting, let/const/var. Đây là nền tảng để hiểu code JS nâng cao.",
@@ -443,7 +443,7 @@ let lessons = [
     id: "L21",
     courseId: "C05",
     title: "Async: Promise, async/await",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     content:
       "Hiểu callback -> promise -> async/await. Thực hành fetch API và xử lý lỗi try/catch đúng chuẩn.",
@@ -456,7 +456,7 @@ let lessons = [
     id: "L22",
     courseId: "C05",
     title: "Array methods nâng cao",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     content:
       "map/filter/reduce/some/every/find. Thực hành xử lý danh sách sản phẩm, giỏ hàng và thống kê.",
@@ -468,7 +468,7 @@ let lessons = [
     id: "L23",
     courseId: "C05",
     title: "OOP & Prototype",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
     content:
       "Prototype chain, class, this, bind/call/apply. Hiểu cách JS hoạt động phía dưới class syntax.",
@@ -484,7 +484,7 @@ let lessons = [
     id: "L24",
     courseId: "C06",
     title: "Giới thiệu Photoshop & giao diện",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     content:
       "Làm quen workspace, panel, layer, thao tác cơ bản, cách lưu file PSD/JPG/PNG đúng chuẩn.",
@@ -494,7 +494,7 @@ let lessons = [
     id: "L25",
     courseId: "C06",
     title: "Cắt ghép ảnh với Selection",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     content:
       "Học marquee/lasso/quick selection, refine edge, mask để cắt ghép sạch không bị viền.",
@@ -504,7 +504,7 @@ let lessons = [
     id: "L26",
     courseId: "C06",
     title: "Chỉnh màu cơ bản & blend",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     content:
       "Curves/Levels/HSL, color balance, blend mode. Tạo tone ảnh và phối màu cơ bản.",
@@ -514,7 +514,7 @@ let lessons = [
     id: "L27",
     courseId: "C06",
     title: "Export ảnh đúng chuẩn",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     content:
       "Export PNG/JPG, tối ưu dung lượng, kích thước, DPI, chuẩn đăng web & in ấn.",
@@ -528,7 +528,7 @@ let lessons = [
     id: "L28",
     courseId: "C07",
     title: "Giao diện Illustrator & công cụ cơ bản",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     content:
       "Artboard, selection, align, stroke/fill. Làm quen hệ vector và cách quản lý layer.",
@@ -538,7 +538,7 @@ let lessons = [
     id: "L29",
     courseId: "C07",
     title: "Pen Tool & vẽ logo đơn giản",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
     content:
       "Pen tool, anchor/handle, curve mượt. Thực hành vẽ logo tối giản và icon.",
@@ -548,7 +548,7 @@ let lessons = [
     id: "L30",
     courseId: "C07",
     title: "Màu sắc, gradient, pattern",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
     content:
       "Swatches, gradient, pattern cơ bản. Tạo style tem nhãn/decal in ấn.",
@@ -558,7 +558,7 @@ let lessons = [
     id: "L31",
     courseId: "C07",
     title: "Xuất file in ấn & cắt decal",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
     content:
       "Xuất AI/PDF, outline font, bleed/crop marks, chuẩn in & die-cut cơ bản.",
@@ -572,7 +572,7 @@ let lessons = [
     id: "L32",
     courseId: "C08",
     title: "UI/UX là gì? Quy trình thiết kế",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
     content:
       "Hiểu UI vs UX, user journey, pain points, và quy trình từ research → wireframe → UI.",
@@ -582,7 +582,7 @@ let lessons = [
     id: "L33",
     courseId: "C08",
     title: "Wireframe & bố cục",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     content:
       "Lưới (grid), spacing, hierarchy. Tạo wireframe cho 1 trang sản phẩm/courses.",
@@ -592,7 +592,7 @@ let lessons = [
     id: "L34",
     courseId: "C08",
     title: "Figma cơ bản & component",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     content:
       "Frame, auto-layout, component/variant. Tạo button/input/card dùng lại.",
@@ -602,7 +602,7 @@ let lessons = [
     id: "L35",
     courseId: "C08",
     title: "Prototype & handoff",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     content:
       "Link prototype, flow, chia sẻ handoff cho dev: spacing, color, export asset.",
@@ -616,7 +616,7 @@ let lessons = [
     id: "L36",
     courseId: "C09",
     title: "Content là gì? Chân dung khách hàng",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     content:
       "Xác định tệp khách hàng, insight, mục tiêu nội dung và KPI cơ bản.",
@@ -626,7 +626,7 @@ let lessons = [
     id: "L37",
     courseId: "C09",
     title: "Framework viết bài (AIDA, PAS)",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     content:
       "Viết caption/bài bán hàng theo AIDA, PAS; luyện headline, CTA rõ ràng.",
@@ -636,7 +636,7 @@ let lessons = [
     id: "L38",
     courseId: "C09",
     title: "Lập kế hoạch content 30 ngày",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
     content:
       "Xây content pillar, lịch đăng, phân bổ định dạng: video, carousel, blog, reels.",
@@ -646,7 +646,7 @@ let lessons = [
     id: "L39",
     courseId: "C09",
     title: "Đo lường & tối ưu",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
     content:
       "Đọc chỉ số reach/engagement/click, A/B headline và tối ưu nội dung theo dữ liệu.",
@@ -660,7 +660,7 @@ let lessons = [
     id: "L40",
     courseId: "C10",
     title: "Tổng quan Ads & cấu trúc chiến dịch",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
     content:
       "Campaign/Adset/Ad, mục tiêu, pixel cơ bản và nguyên tắc setup sạch.",
@@ -670,7 +670,7 @@ let lessons = [
     id: "L41",
     courseId: "C10",
     title: "Targeting & creative",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
     content:
       "Target interest/lookalike, angle nội dung, tối ưu ảnh/video quảng cáo.",
@@ -680,7 +680,7 @@ let lessons = [
     id: "L42",
     courseId: "C10",
     title: "Tối ưu chi phí (CPC/CPM/CPA)",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     content:
       "Đọc chỉ số, scaling, rule tắt/mở ads, xử lý học máy và phân bổ ngân sách.",
@@ -690,7 +690,7 @@ let lessons = [
     id: "L43",
     courseId: "C10",
     title: "Case study & checklist chạy ads",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     content:
       "Checklist trước khi chạy, lỗi thường gặp, case thực tế và cách tối ưu theo ngành.",
@@ -704,7 +704,7 @@ let lessons = [
     id: "L44",
     courseId: "C11",
     title: "Chào hỏi & giao tiếp công sở",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     content:
       "Mẫu câu chào hỏi, small talk, giới thiệu bản thân và cách phản hồi lịch sự.",
@@ -714,7 +714,7 @@ let lessons = [
     id: "L45",
     courseId: "C11",
     title: "Email cơ bản",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     content:
       "Cấu trúc email, subject, opening/closing, tone lịch sự, mẫu email hay dùng.",
@@ -724,7 +724,7 @@ let lessons = [
     id: "L46",
     courseId: "C11",
     title: "Meeting & trình bày ý kiến",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     content:
       "Cách nêu ý kiến, đồng ý/không đồng ý, hỏi lại, tóm tắt và action items.",
@@ -734,7 +734,7 @@ let lessons = [
     id: "L47",
     courseId: "C11",
     title: "Thực hành tình huống",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
     content:
       "Role-play: trao đổi deadline, báo cáo tiến độ, xin nghỉ, xử lý sự cố.",
@@ -748,7 +748,7 @@ let lessons = [
     id: "L48",
     courseId: "C12",
     title: "Hiragana & phát âm",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
     content:
       "Bảng Hiragana, quy tắc phát âm, trường âm, âm ngắt. Luyện đọc chuẩn.",
@@ -758,7 +758,7 @@ let lessons = [
     id: "L49",
     courseId: "C12",
     title: "Katakana & từ mượn",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
     content:
       "Katakana, cách đọc từ mượn, dấu kéo dài, quy tắc ghép âm.",
@@ -768,7 +768,7 @@ let lessons = [
     id: "L50",
     courseId: "C12",
     title: "Mẫu câu N5 thông dụng",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
     content:
       "です/ます, これ/それ/あれ, trợ từ は/が/を/に/で. Thực hành hội thoại ngắn.",
@@ -778,7 +778,7 @@ let lessons = [
     id: "L51",
     courseId: "C12",
     title: "Từ vựng & luyện đề mini",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     content:
       "Từ vựng chủ đề: gia đình, thời gian, mua sắm. Mini test luyện phản xạ.",
@@ -792,7 +792,7 @@ let lessons = [
     id: "L52",
     courseId: "C13",
     title: "Tư duy bán hàng & quy trình tư vấn",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     content:
       "Hiểu pain-point, quy trình tư vấn từ chào hỏi → khai thác nhu cầu → đề xuất.",
@@ -802,7 +802,7 @@ let lessons = [
     id: "L53",
     courseId: "C13",
     title: "Kịch bản tư vấn & hỏi đúng",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     content:
       "Kỹ thuật đặt câu hỏi (SPIN), ghi nhận nhu cầu và tạo niềm tin.",
@@ -812,7 +812,7 @@ let lessons = [
     id: "L54",
     courseId: "C13",
     title: "Xử lý từ chối",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     content:
       "Phản hồi các từ chối: đắt, chưa cần, sợ rủi ro. Kỹ thuật phản biện mềm.",
@@ -822,7 +822,7 @@ let lessons = [
     id: "L55",
     courseId: "C13",
     title: "Chốt đơn & chăm sóc sau bán",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     content:
       "Kỹ thuật chốt, tạo urgency đúng cách, chăm sóc sau bán để upsell/referral.",
@@ -836,7 +836,7 @@ let lessons = [
     id: "L56",
     courseId: "C14",
     title: "Quản lý thời gian là gì?",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
     content:
       "Xác định mục tiêu, đo thời gian thực tế, nhận diện việc quan trọng.",
@@ -846,7 +846,7 @@ let lessons = [
     id: "L57",
     courseId: "C14",
     title: "Ma trận Eisenhower",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
     content:
       "Phân loại việc quan trọng/khẩn cấp. Cách giảm việc gấp và tăng việc quan trọng.",
@@ -856,7 +856,7 @@ let lessons = [
     id: "L58",
     courseId: "C14",
     title: "Time-blocking & Pomodoro",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
     content:
       "Lập lịch theo block, Pomodoro, deep work. Cách tránh phân tâm.",
@@ -866,7 +866,7 @@ let lessons = [
     id: "L59",
     courseId: "C14",
     title: "Chống trì hoãn & duy trì thói quen",
-    completed: false,
+    
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
     content:
       "Kỹ thuật 2 phút, thói quen nhỏ, tracking và review tuần để bền vững.",
@@ -1174,6 +1174,20 @@ let userCourses = [
 
 ];
 
+let userLessonProgress = {
+  
+};
+
+const isLessonCompleted = (userId, lessonId) => {
+  const set = userLessonProgress[userId];
+  return set ? set.has(lessonId) : false;
+};
+
+const markLessonCompleted = (userId, lessonId) => {
+  if (!userLessonProgress[userId]) userLessonProgress[userId] = new Set();
+  userLessonProgress[userId].add(lessonId);
+};
+
 
 
 // Export functions to allow modification
@@ -1199,5 +1213,9 @@ module.exports = {
   },
   addUserCourse: (userCourse) => {
     userCourses.push(userCourse);
-  }
+  },
+
+  isLessonCompleted,
+  markLessonCompleted,
+  getUserLessonProgress: () => userLessonProgress,
 };

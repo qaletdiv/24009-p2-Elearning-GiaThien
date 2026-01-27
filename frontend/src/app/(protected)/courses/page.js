@@ -20,7 +20,7 @@ export default function AllCourses() {
 
   // ===== Pagination state =====
   const [page, setPage] = useState(1);
-  const limit = 9; // 3x3 grid
+  const limit = 6
   const [total, setTotal] = useState(0);
   const totalPages = useMemo(() => Math.max(1, Math.ceil(total / limit)), [total, limit]);
 
@@ -220,7 +220,7 @@ export default function AllCourses() {
                   onClick={() => gotoPage(page - 1)}
                   className="px-3 py-2 rounded border bg-white hover:bg-gray-50 disabled:opacity-50"
                 >
-                  ← Prev
+                   Prev
                 </button>
 
                 {/* page numbers (hiển thị gọn) */}
@@ -243,7 +243,7 @@ export default function AllCourses() {
                   onClick={() => gotoPage(page + 1)}
                   className="px-3 py-2 rounded border bg-white hover:bg-gray-50 disabled:opacity-50"
                 >
-                  Next →
+                  Next 
                 </button>
               </div>
             </>

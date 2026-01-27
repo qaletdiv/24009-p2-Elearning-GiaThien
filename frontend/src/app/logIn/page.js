@@ -57,7 +57,7 @@ export default function Login() {
       <div className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
         {message && (
-          <p className="text-center mt-4 text-red-500 font-medium">{message}</p>
+          <p className="text-center mt-4 text-black-500 font-medium">{message}</p>
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

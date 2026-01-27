@@ -9,7 +9,7 @@ export default function ChapterQuizPage() {
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
   
-  // 📘 Lấy quiz theo chương
+  //  Lấy quiz theo chương
   useEffect(() => {
     console.log(id, quizId);
     fetch(`http://localhost:8080/api/courses/${id}/quiz/${quizId}`)
@@ -34,7 +34,7 @@ export default function ChapterQuizPage() {
       });
   }, [id, quizId]);
 
-  // 📘 Cập nhật đáp án
+  //  Cập nhật đáp án
   const handleAnswer = (questionId, answerIndex) => {
     setAnswers((prev) => {
       const updated = [...prev];
@@ -45,12 +45,12 @@ export default function ChapterQuizPage() {
     });
   };
 
-  // 📘 Nộp bài
+  //  Nộp bài
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
       alert("Vui lòng đăng nhập trước khi làm bài!");
-      router.push("/logIn");
+      router.push("/login");
       return;
     }
 

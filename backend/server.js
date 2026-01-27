@@ -15,6 +15,8 @@ const {
   getNextUserId,
   addUser,
   updateLesson,
+  isLessonCompleted,       
+  markLessonCompleted,     
   addUserCourse
 } = require('./data/data');
 
@@ -265,29 +267,35 @@ app.get("/api/categories", (req, res) => {
 app.get("/api/courses", (req, res) => {
   const { keyword, category, level, description, target } = req.query;
 
+  // ===== Pagination =====
+  const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+  const limit = Math.max(1, parseInt(req.query.limit, 10) || 6); 
+  const start = (page - 1) * limit;
+
   let result = [...getCourses()];
 
+
   if (keyword) {
-    result = result.filter(c =>
-      c.title.toLowerCase().includes(String(keyword).toLowerCase())
-    );
+    const kw = String(keyword).toLowerCase();
+    result = result.filter((c) => (c.title || "").toLowerCase().includes(kw));
   }
 
-  if (category) {
-    result = result.filter(c => c.category === category);
-  }
+  if (category) result = result.filter((c) => c.category === category);
+  if (level) result = result.filter((c) => c.level === level);
 
-  if (level) {
-    result = result.filter(c => c.level === level);
-  }
-
+ 
   if (description) {
-    result = result.filter(c => c.description === description);
+    const d = String(description).toLowerCase();
+    result = result.filter((c) => (c.description || "").toLowerCase().includes(d));
   }
+
   if (target) {
-    result = result.filter(c => c.target === target);
+    const t = String(target).toLowerCase();
+    result = result.filter((c) => (c.target || "").toLowerCase().includes(t));
   }
-  const formatted = result.map(c => ({
+
+  
+  const formatted = result.map((c) => ({
     id: c.id,
     title: c.title,
     image: `http://localhost:${PORT}${c.image}`,
@@ -295,11 +303,23 @@ app.get("/api/courses", (req, res) => {
     target: c.target || "",
     category: c.category || "Chưa phân loại",
     level: c.level || "Cơ bản",
-    price: c.price ?? "Miễn phí",
+    price: c.price ?? 0,
   }));
 
-  res.json(formatted);
+  
+  const total = formatted.length;
+  const totalPages = Math.max(1, Math.ceil(total / limit));
+  const items = formatted.slice(start, start + limit);
+
+  return res.json({
+    items,
+    total,
+    page,
+    limit,
+    totalPages,
+  });
 });
+
 
 
 
@@ -329,25 +349,25 @@ app.get("/api/courses/my", authenticateToken, (req, res) => {
 // API lấy bài học gần nhất chưa hoàn thành (đặt trước /:id để tránh bị nuốt nếu bạn đổi path)
 app.get("/api/courses/:id/lesson/last", authenticateToken, (req, res) => {
   const courseId = req.params.id;
-  const course = getCourses().find((c) => c.id === courseId);
+  const userId = Number(req.user.id);
 
+  const course = getCourses().find(c => c.id === courseId);
   if (!course) return res.status(404).json({ message: "Không tìm thấy khóa học" });
 
   const courseLessons = getLessons().filter(l => l.courseId === courseId);
-  const nextLesson = courseLessons.find((lesson) => !lesson.completed);
 
-  if (!nextLesson) {
-    return res.json({ message: "Bạn đã hoàn thành khóa học này" });
-  }
+  const nextLesson = courseLessons.find(l => !isLessonCompleted(userId, l.id));
+  if (!nextLesson) return res.json({ message: "Bạn đã hoàn thành khóa học này" });
 
-  res.json({
-    courseId: course.id,
+  return res.json({
+    courseId,
     lessonId: nextLesson.id,
     title: nextLesson.title,
   });
 });
 
-// ✅ Lấy quiz cuối khóa (đặt trước /:id)
+
+//  Lấy quiz cuối khóa (đặt trước /:id)
 app.get("/api/courses/:id/quiz", (req, res) => {
   const quiz = getCourseQuizzes().find(q => q.courseId === req.params.id);
   if (!quiz) return res.status(404).json({ message: "Không có quiz cho khóa học này" });
@@ -432,78 +452,136 @@ app.post("/api/courses/:id/reviews", authenticateToken, (req, res) => {
 // API lấy danh sách bài học trong khóa
 app.get("/api/courses/:id/lessons", authenticateToken, (req, res) => {
   const { id } = req.params;
+  const userId = Number(req.user.id);
+
   const course = getCourses().find(c => c.id === id);
   if (!course) return res.status(404).json({ message: "Không tìm thấy khóa học" });
 
   const courseLessons = getLessons().filter(l => l.courseId === id);
-  res.json(courseLessons.map(l => ({
-    id: l.id,
-    title: l.title,
-    completed: l.completed
-  })));
+
+  res.json(
+    courseLessons.map(l => ({
+      id: l.id,
+      title: l.title,
+      completed: isLessonCompleted(userId, l.id), 
+    }))
+  );
 });
+
 
 // API lấy chi tiết bài học
 app.get("/api/courses/:id/lessons/:lessonId", authenticateToken, (req, res) => {
   const { id, lessonId } = req.params;
+  const userId = Number(req.user.id);
+
   const course = getCourses().find(c => c.id === id);
   if (!course) return res.status(404).json({ message: "Không tìm thấy khóa học" });
 
-  const lesson = getLessons().find(l => l.id === lessonId && l.courseId === id);
-  if (!lesson) return res.status(404).json({ message: "Không tìm thấy bài học" });
+  const courseLessons = getLessons().filter(l => l.courseId === id);
 
-  res.json({
+  const idx = courseLessons.findIndex(l => l.id === lessonId);
+  if (idx === -1) return res.status(404).json({ message: "Không tìm thấy bài học" });
+
+  
+  if (idx > 0) {
+    const prevLesson = courseLessons[idx - 1];
+    const prevDone = isLessonCompleted(userId, prevLesson.id);
+    if (!prevDone) {
+      return res.status(403).json({
+        message: "Bạn cần hoàn thành bài học trước đó trước khi học bài này.",
+        blocked: true,
+        requiredLessonId: prevLesson.id,
+      });
+    }
+  }
+
+  const lesson = courseLessons[idx];
+
+  return res.json({
     id: lesson.id,
     title: lesson.title,
     videoUrl: lesson.videoUrl || "https://www.w3schools.com/html/mov_bbb.mp4",
     content: lesson.content || "Nội dung đang cập nhật...",
-    completed: lesson.completed || false,
-    resources: lesson.resources || []
+    completed: isLessonCompleted(userId, lesson.id),
+    resources: lesson.resources || [],
   });
 });
+
+
 
 // Đánh dấu bài học hoàn thành
 app.post("/api/courses/:id/lessons/:lessonId/complete", authenticateToken, (req, res) => {
   const { id, lessonId } = req.params;
+  const userId = Number(req.user.id);
+
   const course = getCourses().find(c => c.id === id);
   if (!course) return res.status(404).json({ message: "Không tìm thấy khóa học" });
 
   const lesson = getLessons().find(l => l.id === lessonId && l.courseId === id);
   if (!lesson) return res.status(404).json({ message: "Không tìm thấy bài học" });
 
-  updateLesson(lessonId, id, { completed: true });
-  res.json({ message: "Đã đánh dấu bài học là hoàn thành", lesson });
+  //  đánh dấu hoàn thành theo user
+  markLessonCompleted(userId, lessonId);
+
+  //  tính progress theo % 
+  const courseLessons = getLessons().filter(l => l.courseId === id);
+  const completedCount = courseLessons.filter(l => isLessonCompleted(userId, l.id)).length;
+  const progress = courseLessons.length ? Math.round((completedCount / courseLessons.length) * 100) : 0;
+
+  // update userCourses (nếu có)
+  const uc = getUserCourses().find(x => x.userId === userId && x.courseId === id);
+  if (uc) uc.progress = progress;
+
+  return res.json({
+    message: "Đã đánh dấu bài học là hoàn thành",
+    lessonId,
+    progress,
+  });
 });
 
-// ✅ API lấy chi tiết khóa học (route động /:id) — ĐẶT CUỐI CÙNG trong nhóm /api/courses/*
+//  API lấy chi tiết khóa học (route động /:id) 
 app.get("/api/courses/:id", (req, res) => {
   const id = req.params.id;
   const course = getCourses().find(c => c.id === id);
-
-  if (!course) {
-    return res.status(404).json({ message: "Không tìm thấy khóa học" });
-  }
+  if (!course) return res.status(404).json({ message: "Không tìm thấy khóa học" });
 
   const courseLessons = getLessons().filter(l => l.courseId === id);
 
+  // nếu có token => tính progress theo user
+  let userId = null;
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, SECRET_KEY);
+      userId = Number(decoded.id);
+    } catch (_) {}
+  }
+
   const total = courseLessons.length;
-  const completed = courseLessons.filter(l => l.completed).length;
+  const completed = userId
+    ? courseLessons.filter(l => isLessonCompleted(userId, l.id)).length
+    : 0;
+
   const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
-  res.json({
+  return res.json({
     id: course.id,
     title: course.title,
     image: `http://localhost:${PORT}${course.image}`,
     description: course.description || "Khoá học hấp dẫn",
-    price: course.price || "Miễn phí",
+    price: course.price ?? 0,
     instructor: course.instructor || "Giảng viên chưa rõ",
     duration: course.duration || "5 giờ",
-    rating: course.rating || 4.5,
     progress,
-    lessons: courseLessons,
-    reviews: course.reviews || []
+    lessons: courseLessons.map(l => ({
+      ...l,
+      completed: userId ? isLessonCompleted(userId, l.id) : false, // ✅ đồng bộ lesson.completed theo user
+    })),
+    reviews: course.reviews || [],
   });
 });
+
 
 app.listen(PORT, () => {
   console.log(`Backend chạy tại http://localhost:${PORT}`);
